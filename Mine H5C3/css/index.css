@@ -1,0 +1,361 @@
+
+#fp-nav {
+  position: fixed;
+  z-index: 100;
+  margin-top: -32px;
+  top: 50%;
+  opacity: 1;
+  -webkit-transform: translate3d(0,0,0);
+}
+#fp-nav.right {
+  right: 17px;
+}
+#fp-nav.left {
+  left: 17px;
+}
+.fp-slidesNav{
+  position: absolute;
+  z-index: 4;
+  opacity: 1;
+  -webkit-transform: translate3d(0,0,0);
+  -ms-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);
+  left: 0 !important;
+  right: 0;
+  margin: 0 auto !important;
+}
+.fp-slidesNav.bottom {
+  bottom: 17px;
+}
+.fp-slidesNav.top {
+  top: 17px;
+}
+#fp-nav ul,
+.fp-slidesNav ul {
+margin: 0;
+padding: 0;
+}
+#fp-nav ul li,
+.fp-slidesNav ul li {
+  display: block;
+  width: 14px;
+  height: 13px;
+  margin: 7px;
+  position:relative;
+}
+.fp-slidesNav ul li {
+  display: inline-block;
+}
+#fp-nav ul li a,
+.fp-slidesNav ul li a {
+  display: block;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  text-decoration: none;
+}
+#fp-nav ul li a.active span,
+.fp-slidesNav ul li a.active span,
+#fp-nav ul li:hover a.active span,
+.fp-slidesNav ul li:hover a.active span{
+  height: 12px;
+  width: 12px;
+  margin: -6px 0 0 -6px;
+  border-radius: 100%;
+}
+#fp-nav ul li a span,
+.fp-slidesNav ul li a span {
+  border-radius: 50%;
+  position: absolute;
+  z-index: 1;
+  height: 4px;
+  width: 4px;
+  border: 0;
+  background: #333;
+  left: 50%;
+  top: 50%;
+  margin: -2px 0 0 -2px;
+  -webkit-transition: all 0.1s ease-in-out;
+  -moz-transition: all 0.1s ease-in-out;
+  -o-transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
+}
+#fp-nav ul li:hover a span,
+.fp-slidesNav ul li:hover a span{
+  width: 10px;
+  height: 10px;
+  margin: -5px 0px 0px -5px;
+}
+#fp-nav ul li .fp-tooltip {
+  position: absolute;
+  top: -2px;
+  color: #fff;
+  font-size: 14px;
+  font-family: arial, helvetica, sans-serif;
+  white-space: nowrap;
+  max-width: 220px;
+  overflow: hidden;
+  display: block;
+  opacity: 0;
+  width: 0;
+  cursor: pointer;
+}
+#fp-nav ul li:hover .fp-tooltip,
+#fp-nav.fp-show-active a.active + .fp-tooltip {
+  -webkit-transition: opacity 0.2s ease-in;
+  transition: opacity 0.2s ease-in;
+  width: auto;
+  opacity: 1;
+}
+#fp-nav ul li .fp-tooltip.right {
+  right: 20px;
+}
+#fp-nav ul li .fp-tooltip.left {
+  left: 20px;
+}
+
+
+
+.shopping-center {
+  position: fixed;
+  right: 100px;
+  bottom: 650px;
+  width: 60px;
+  height: 60px;
+  z-index: 1000;
+}
+
+
+/*第一页*/
+.qbh-title {
+  position: relative;
+  background-image: url("../image/qbh-title-bg.png");
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  background-size: 60%;
+}
+
+.qbh-title .qbh-title-sofa {
+  position: absolute;
+  left: 50%;
+  bottom: 343px;
+  margin-left: -195px;
+  animation: sofamove 2s linear 0s infinite;
+}
+@keyframes sofamove {
+  0% {
+    bottom: 343px;
+  }
+  50% {
+    bottom: 303px;
+  }
+  100% {
+    bottom: 343px;
+  }
+}
+
+.qbh-title .qbh-title-name {
+  position: absolute;
+  right: 300px;
+  bottom: 400px;
+  animation: namemove 2s linear 0s infinite;
+}
+@keyframes namemove {
+  0% {
+    bottom: 500px;
+  }
+  50% {
+    bottom: 550px;
+  }
+  100% {
+    bottom: 500px;
+  }
+}
+
+.qbh-title .qbh-title-extra {
+  position: absolute;
+  bottom: 100px;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+
+/*第二页*/
+.qbh-list {
+  position: relative;
+  background-image: url('../image/qbh-list-bg.png');
+  background-position: center bottom;
+  background-repeat: no-repeat;
+}
+
+.qbh-list .qbh-list-word {
+  position: absolute;
+  width: 363px;
+  height: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 550px;
+  z-index: 1;
+}
+.qbh-list .qbh-list-word img {
+  position: absolute;
+}
+.qbh-list .qbh-list-word img:first-child {
+  display: block;
+}
+.qbh-list .qbh-list-word img:last-child {
+  display: none;
+}
+
+.qbh-list .qbh-list-computer {
+  position: absolute;
+  width: 574px;
+  height: 287px;
+  left: 50%;
+  margin-left: -290px;
+  bottom: 197px;
+}
+
+.qbh-list .qbh-list-computer .qbh-list-search-box {
+  position: absolute;
+  width: 222px;
+  height: 45px;
+  left: 700px;
+  bottom: 120px;
+  background-image: url("../image/qbh-list-search-box.png");
+  background-position: 0px 0px;
+  background-repeat: no-repeat;
+
+}
+.qbh-list .qbh-list-computer .qbh-list-search-box>img {
+  position: absolute;
+  right: 30px;
+  bottom: 11px;
+  display: none;
+}
+
+.qbh-list .qbh-list-computer .qbh-list-search-finish {
+  position: absolute;
+  width: 222px;
+  left: 200px;
+  bottom: 120px;
+  display: none;
+}
+
+.qbh-list .qbh-list-computer .qbh-list-sofa-box {
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+}
+
+.qbh-list .qbh-list-computer .qbh-list-sofas {
+  position: absolute;
+  right: 60px;
+  bottom: 10px;
+  width: 0px;
+  /*width: 441px;*/
+}
+
+.qbh-list .qbh-list-computer .qbh-list-sofa {
+  position: absolute;
+  right: 285px;
+  bottom: 140px;
+  width: 100px;
+  display: none;
+  z-index: 1;
+}
+
+
+/*第三页*/
+.qbh-buy {
+  position: relative;
+  background-image: url("../image/qbh-buy-main-bg.png");
+  background-position: center 80px;
+  background-repeat: no-repeat;
+}
+
+.qbh-buy .qbh-buy-select {
+  position: absolute;
+  bottom: 125px;
+  left: 50%;
+  margin-left: 38px;
+}
+
+.qbh-buy .qbh-buy-add {
+  position: relative;
+  width: 218px;
+  height: 58px;
+  margin-top: 20px;
+}
+.qbh-buy .qbh-buy-choose {
+  position: relative;
+  width: 296px;
+  height: 131px;
+}
+
+.qbh-buy div div img {
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+}
+
+.qbh-buy div div img:last-child {
+  display: none;
+}
+
+.qbh-buy .qbh-buy-sofa-rotate {
+  position: absolute;
+  left: -270px;
+  bottom: 140px;
+  /*left: -160px;*/
+  /*bottom: -640px;*/
+  /*z-index: 1;*/
+}
+
+
+/*第四页*/
+.qbh-info {
+  position: relative;
+  background-image: url("../image/qbh-info-bg.png");
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
+
+.qbh-info .qbh-info-cloud {
+  position: absolute;
+  left: 100px;
+  bottom: 600px;
+  width: 882px;
+  height: 120px;
+  background-image: url("../image/qbh-info-cloud.png");
+  animation: cloudmove 10s linear 0s alternate infinite;
+}
+@keyframes cloudmove {
+  from {
+    left: 100px;
+  }
+  to {
+    left: 500px;
+  }
+}
+
+.qbh-info .qbh-info-cart {
+  position: absolute;
+  width: 407px;
+  height: 346px;
+  background-image: url("../image/qbh-info-cart.png");
+  background-repeat: no-repeat;
+  left: 500px;
+  bottom: 50px;
+}
+.qbh-info .qbh-info-cart>img {
+  position: absolute;
+  left: 150px;
+  bottom: 170px;
+  z-index: -1;
+  display: none;
+}

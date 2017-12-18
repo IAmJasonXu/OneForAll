@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<script>
+
+    var json = {
+        name: "张三",
+        age : 18,
+        address: ["三里屯","五棵松"],
+        friend: {
+            name: "李四",
+            age : 80,
+            address: ["三里屯","五棵松"]
+        }
+    };
+    json.friend.friend = json;
+
+    (function (){
+        var store = [];             //{old:旧对象，new:新对象}
+        var count = 0;              //递归层次
+        function clone(object){     //潜在bug————循环引用问题，可以利用闭包，创建一个数组，储存已经拷贝过的对象以及其拷贝
+            count++;
+            if(!(object instanceof Object)){
+                count--;
+                return object;
+            }
+            var exist = false;
+            for(var index = 0 ; index < store.length ; index++){
+                if(store[index].old === object){
+                    exist = true;
+                    break;
+                }
+            }
+            if(exist == true){
+                count--;
+                return store[index].new;
+            }else if(object instanceof Array){
+                var newObject = [];
+                store.push({old:object, new:newObject});
+            }else if(object instanceof Object){
+                newObject = {};
+                store.push({old:object, new:newObject});
+            }
+            for(var k in object){
+                newObject[k] = clone(object[k]);
+            }
+            if(count === 1){
+                store.length = 0;
+            }
+            count--;
+            return newObject;
+        }
+        window.clone = clone;
+    })()
+
+
+
+    var aaa = clone(json);
+
+    aaa.friend.name = "王五";
+    console.log(json);
+    console.log(aaa);
+    console.log(json === aaa);
+    console.log(json.friend === aaa.friend);
+    console.log(json.friend.friend === aaa.friend.friend);
+    console.log(json.friend.friend === json);
+    console.log(aaa.friend.friend === aaa);
+
+</script>
+
+
+</body>
+</html>

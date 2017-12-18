@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>贪吃蛇</title>
+    <style>
+        body {
+            background-color: black;
+        }
+
+        div.map {
+            width: 600px;
+            height: 600px;
+            margin: 80px auto 0px;
+            background-color: #c1c1c1;
+            position: relative;
+        }
+
+        .map .row div {
+            float: left;
+            box-sizing: border-box;
+            /*border: 1px solid red;*/
+            font-size: 0px;
+        }
+
+        .map #control {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            top: 250px;
+            right: -150px;
+        }
+
+        #control button {
+            width: 30px;
+            height: 30px;
+            background-color: #c1c1c1;
+            text-align: center;
+            font-size: 15px;
+            line-height: 30px;
+        }
+
+        #control #up {
+            position: absolute;
+            top: 0px;
+            left: 35px;
+        }
+
+        #control #down {
+            position: absolute;
+            bottom: 0px;
+            left: 35px;
+        }
+
+        #control #left {
+            position: absolute;
+            top: 35px;
+            left: 0px;
+        }
+
+        #control #right {
+            position: absolute;
+            top: 35px;
+            right: 0px;
+        }
+
+        #control #reset {
+            width: 100px;
+            position: absolute;
+            top: 120px;
+            left: 0px;
+        }
+
+        #control #speed {
+            width: 100px;
+            position: absolute;
+            top: 160px;
+            left: 0px;
+        }
+
+        #control #scale {
+            width: 100px;
+            position: absolute;
+            top: 190px;
+            left: 0px;
+        }
+
+        .normal {
+            background-color: transparent;
+        }
+
+        .head {
+            border-radius: 50%;
+            background-color: green;
+            position: relative;
+        }
+
+        .head::before {
+            content: '';
+            width: 25%;
+            height: 15%;
+            border-radius: 50%;
+            background-color: black;
+            position: absolute;
+            left: 60%;
+            top: 60%;
+        }
+        .head.lookleft::before {
+            transform: rotate(-90deg);
+            transform-origin: 0 50%;
+        }
+        .head.lookright::before {
+            transform: rotate(90deg);
+            transform-origin: 0 50%;
+        }
+
+        .head::after {
+            content: '';
+            width: 25%;
+            height: 15%;
+            border-radius: 50%;
+            background-color: black;
+            position: absolute;
+            left: 60%;
+            bottom: 60%;
+        }
+        .head.lookleft::after {
+            transform: rotate(-90deg);
+            transform-origin: 0 50%;
+        }
+        .head.lookright::after {
+            transform: rotate(90deg);
+            transform-origin: 0 50%;
+        }
+
+        .body {
+            border-radius: 50%;
+            background-color: yellowgreen;
+        }
+
+        .dead {
+            border-radius: 50%;
+            background-color: red;
+        }
+
+        .food {
+            border-radius: 50%;
+            background: url("images/food.jpg") no-repeat;
+            background-size: 100%;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var map = document.getElementById('map');
+            var control = document.getElementById('control');
+            var btnArr = control.getElementsByTagName('button');
+            var speed = control.getElementsByTagName('select')[0];
+            var scale = control.getElementsByTagName('select')[1];
+            var speedValue = 1000;
+            var scaleValue = 10;
+
+            var points = [];
+            points.randomFood = function (num) {
+                var createNum = 0;
+                var needJudge = true;
+                while (createNum < num) {
+                    if (needJudge && this.remain() == 0) {
+                        return;
+                    }
+                    var row = getRandom_LBRB(0, points.length - 1);
+                    var column = getRandom_LBRB(0, points[0].length - 1);
+                    if (this[row][column].className === 'normal') {
+                        this[row][column].className = 'food';
+                        createNum++;
+                        needJudge = true;
+                        continue;
+                    }
+                    needJudge = false;
+                }
+            }
+            points.remain = function () {
+                var remainAll = 0;
+                for (var indexRow = 0; indexRow < this.length; indexRow++) {
+                    for (var indexColumn = 0; indexColumn < this[0].length; indexColumn++) {
+                        if (this[indexRow][indexColumn].className == 'normal') {
+                            remainAll++;
+                        }
+                    }
+                }
+                return remainAll;
+            }
+            points.isWinner = function () {
+                var remainAll = 0;
+                for (var indexRow = 0; indexRow < this.length; indexRow++) {
+                    for (var indexColumn = 0; indexColumn < this[0].length; indexColumn++) {
+                        if (this[indexRow][indexColumn].className == 'normal' || this[indexRow][indexColumn].className == 'food') {
+                            remainAll++;
+                        }
+                    }
+                }
+                return remainAll > 0 ? false : true;
+            }
+
+            btnArr[0].onclick = function () {
+                if (snake.headDirection == 'up') {
+                    snake.direction = 'up';
+                    snake.move();
+                } else if (snake.headDirection != 'down') {
+                    snake.direction = 'up';
+                }
+                snake.turnEye();
+            }
+            btnArr[1].onclick = function () {
+                if (snake.headDirection == 'down') {
+                    snake.direction = 'down';
+                    snake.move();
+                } else if (snake.headDirection != 'up') {
+                    snake.direction = 'down';
+                }
+                snake.turnEye();
+            }
+            btnArr[2].onclick = function () {
+                if (snake.headDirection == 'left') {
+                    snake.direction = 'left';
+                    snake.move();
+                } else if (snake.headDirection != 'right') {
+                    snake.direction = 'left';
+                }
+                snake.turnEye();
+            }
+            btnArr[3].onclick = function () {
+                if (snake.headDirection == 'right') {
+                    snake.direction = 'right';
+                    snake.move();
+                } else if (snake.headDirection != 'left') {
+                    snake.direction = 'right';
+                }
+                snake.turnEye();
+            }
+            btnArr[4].onclick = function () {
+                for (var clear = map.children.length - 1; clear > 0; clear--) {
+                    map.removeChild(map.children[clear]);
+                }
+                for (var index_r = 0; index_r < scaleValue; index_r++) {
+                    var row = document.createElement('div');
+                    row.className = 'row';
+                    for (var index_c = 0; index_c < scaleValue; index_c++) {
+                        var column = document.createElement('div');
+                        column.className = 'normal';
+                        row.appendChild(column);
+                    }
+                    map.appendChild(row);
+                }
+                points.length = 0;
+                for (var index = 1; index < map.children.length; index++) {
+                    points[points.length] = map.children[index].children;
+                    for (var index_p = 0; index_p < points[points.length - 1].length; index_p++) {
+                        points[points.length - 1][index_p].style.width = 600 / scaleValue + 'px';
+                        points[points.length - 1][index_p].style.height = 600 / scaleValue + 'px';
+                        points[points.length - 1][index_p].row = index - 1;
+                        points[points.length - 1][index_p].column = index_p;
+                    }
+                }
+                snake.initial(getRandom_LBRB(5, 9));
+                points.randomFood(getRandom_LBRB(5, 10));
+            }
+
+            speed.onchange = function (event) {
+                for (var index = 0; index < this.children.length; index++) {
+                    if (this.children[index].selected === true) {
+                        switch (index) {
+                            case 0:
+                                speedValue = 1000;
+                                return;
+                            case 1:
+                                speedValue = 200;
+                                return;
+                            case 2:
+                                speedValue = 100;
+                                return;
+                            case 3:
+                                speedValue = 20;
+                                return;
+                            case 4:
+                                speedValue = 10;
+                                return;
+                            default:
+                        }
+                    }
+                }
+            }
+
+            scale.onchange = function (event) {
+                for (var index = 0; index < this.children.length; index++) {
+                    if (this.children[index].selected === true) {
+                        switch (index) {
+                            case 0:
+                                scaleValue = 10;
+                                return;
+                            case 1:
+                                scaleValue = 20;
+                                return;
+                            case 2:
+                                scaleValue = 30;
+                                return;
+                            case 3:
+                                scaleValue = 40;
+                                return;
+                            case 4:
+                                scaleValue = 60;
+                                return;
+                            default:
+                        }
+                    }
+                }
+            }
+
+            var snake = [];
+            snake.direction = 'none';
+            snake.headDirection = 'none';
+            snake.initial = function (num) {
+                this.length = 0;
+                for (var index = 0; index < num && index < points[0].length - 1; index++) {
+                    points[0][index].className = 'body';
+                    snake.unshift(points[0][index]);
+                }
+                snake[0].className = 'head';
+                snake.direction = 'right';
+                snake.headDirection = 'right';
+                snake.turnHead();
+
+                window.clearInterval(snake.timer);
+                snake.timer = window.setInterval(function () {
+                    snake.move();
+                }, speedValue);
+            };
+            snake.move = function () {
+                var target = null;
+                var targetRow = null;
+                var targetColumn = null;
+
+                switch (this.direction) {
+                    case 'left':
+                        targetRow = this[0].row;
+                        targetColumn = this[0].column - 1;
+                        break;
+                    case 'right':
+                        targetRow = this[0].row;
+                        targetColumn = this[0].column + 1;
+                        break;
+                    case 'up':
+                        targetRow = this[0].row - 1;
+                        targetColumn = this[0].column;
+                        break;
+                    case 'down':
+                        targetRow = this[0].row + 1;
+                        targetColumn = this[0].column;
+                        break;
+                    default:
+                }
+                if (targetRow < 0 || targetRow > points.length - 1 || targetColumn < 0 || targetColumn > points[0].length - 1) {
+                    this.end();
+                    return;
+                }
+                target = points[targetRow][targetColumn];
+                if (target.className === 'normal') {
+                    snake[0].className = 'body';
+                    target.className = 'head';
+                    snake.unshift(target);
+                    snake.headDirection = snake.direction;
+                    var leave = snake.pop();
+                    leave.className = 'normal';
+                    leave.style.transform = '';
+                } else if (target.className === 'food') {
+                    snake[0].className = 'body';
+                    target.className = 'head';
+                    snake.unshift(target);
+                    snake.headDirection = snake.direction;
+                    points.randomFood(1);
+                } else if (target.className === 'body') {
+                    this.end();
+                }
+                snake.turnHead();
+                snake.turnEye();
+            };
+            snake.turnHead = function () {
+                switch (this.headDirection) {
+                    case 'left':
+                        this[0].style.transform = 'rotate(180deg)';
+                        break;
+                    case 'right':
+                        this[0].style.transform = 'rotate(0deg)';
+                        break;
+                    case 'up':
+                        this[0].style.transform = 'rotate(-90deg)';
+                        break;
+                    case 'down':
+                        this[0].style.transform = 'rotate(90deg)';
+                        break;
+                    default:
+                }
+            };
+            snake.turnEye = function () {
+                switch (true) {
+                    case this.headDirection == this.direction:
+                        this[0].className = 'head';
+                        break;
+                    case this.headDirection == 'left' && this.direction == 'up':
+                        this[0].className = 'head lookright';
+                        break;
+                    case this.headDirection == 'left' && this.direction == 'down':
+                        this[0].className = 'head lookleft';
+                        break;
+                    case this.headDirection == 'right' && this.direction == 'up':
+                        this[0].className = 'head lookleft';
+                        break;
+                    case this.headDirection == 'right' && this.direction == 'down':
+                        this[0].className = 'head lookright';
+                        break;
+                    case this.headDirection == 'up' && this.direction == 'left':
+                        this[0].className = 'head lookleft';
+                        break;
+                    case this.headDirection == 'up' && this.direction == 'right':
+                        this[0].className = 'head lookright';
+                        break;
+                    case this.headDirection == 'down' && this.direction == 'left':
+                        this[0].className = 'head lookright';
+                        break;
+                    case this.headDirection == 'down' && this.direction == 'right':
+                        this[0].className = 'head lookleft';
+                        break;
+                    default:
+                }
+            };
+            snake.end = function () {
+                window.clearInterval(snake.timer);
+                if(points.isWinner()){
+                    alert('You Have Won!!');
+                    for (var index = 0; index < snake.length; index++) {
+                        snake[index].className = 'normal';
+                    }
+                }else{
+                    for (var index = 0; index < snake.length; index++) {
+                        snake[index].className = 'dead';
+                    }
+                }
+            };
+
+            window.onkeyup = function (event) {
+                event = event || window.event;
+                switch (event.key) {
+                    case 'ArrowUp':
+                        btnArr[0].onclick();
+                        break;
+                    case 'ArrowDown':
+                        btnArr[1].onclick();
+                        break;
+                    case 'ArrowLeft':
+                        btnArr[2].onclick();
+                        break;
+                    case 'ArrowRight':
+                        btnArr[3].onclick();
+                        break;
+                    case 'Space':
+                        btnArr[4].onclick();
+                        break;
+                    default:
+                }
+            }
+
+        }
+
+
+        function getRandom_LBRB(min, max) {
+            if (min > max) {
+                var exchange = min;
+                min = max;
+                max = exchange;
+            }
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            if (min > max) {
+                return NaN;
+            }
+            return parseInt(Math.random() * (max - min + 1)) + min;
+        }
+    </script>
+</head>
+<body>
+<div class="map" id="map">
+    <div class="control" id="control">
+        <button id="up">上</button>
+        <button id="down">下</button>
+        <button id="left">左</button>
+        <button id="right">右</button>
+        <button id="reset">重置</button>
+        <select id="speed">
+            <option value="1" selected>等级1</option>
+            <option value="5">等级5</option>
+            <option value="10">等级10</option>
+            <option value="50">等级50</option>
+            <option value="100">等级100</option>
+        </select>
+        <select id="scale">
+            <option value="1" selected>10</option>
+            <option value="5">20</option>
+            <option value="10">30</option>
+            <option value="50">40</option>
+            <option value="100">60</option>
+        </select>
+    </div>
+</div>
+</body>
+</html>

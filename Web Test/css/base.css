@@ -1,0 +1,35 @@
+/*基础样式表*/
+
+/*初始化*/
+html,body,p,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dd,dt {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	line-height: 1em;
+}
+input,img {
+	border: 0px none;
+	outline-style: none;
+	margin: 0;
+	padding: 0;
+	line-height: 1em;
+}
+a {
+	text-decoration: none;
+	color: black;
+	font-size: 12px;
+	line-height: 1em;
+}
+
+/*清除浮动*/
+.clearfix::after {
+	content: "";
+	display: block;
+	height: 0px;
+	line-height: 0px;
+	clear: both;
+	visibility: hidden;
+}
+.clearfix {
+	*zoom: 1;
+}

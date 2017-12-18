@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav {
+            height: 30px;
+            background: #036663;
+            border-bottom: 1px solid #369;
+            line-height: 30px;
+            padding-left: 30px;
+        }
+
+        .nav a {
+            color: #fff;
+            text-align: center;
+            font-size: 14px;
+            text-decoration: none;
+
+        }
+
+        .d-box {
+            width: 400px;
+            height: 300px;
+            border: 5px solid #eee;
+            box-shadow: 2px 2px 2px 2px #666;
+            position: absolute;
+            top: 40%;
+            left: 40%;
+        }
+
+        .hd {
+            width: 100%;
+            height: 25px;
+            background-color: #7c9299;
+            border-bottom: 1px solid #369;
+            line-height: 25px;
+            color: white;
+            cursor: move;
+        }
+
+        #box_close {
+            float: right;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var box = document.getElementById('d_box');
+            var drop = box.children[0];
+            var close = drop.children[0];
+
+            drop.onmousedown = function (event) {
+                event = event || window.event;
+                var pagex = event.pageX || event.clientX + document.documentElement.scrollWidth;
+                var pagey = event.pageY || event.clientY + document.documentElement.scrollTop;
+                var startx = pagex - box.offsetLeft;
+                var starty = pagey - box.offsetTop;
+                document.onmousemove = function (event) {
+                    event = event || window.event;
+
+                    var pagex = event.pageX || event.clientX + document.documentElement.scrollLeft;
+                    var pagey = event.pageY || event.clientY + document.documentElement.scrollTop;
+
+                    var boxx = pagex - startx;
+                    var boxy = pagey - starty;
+
+                    if (boxx < 0) {
+                        boxx = 0;
+                    }
+                    if (boxy < 0) {
+                        boxy = 0;
+                    }
+
+                    box.style.left = boxx + 'px';
+                    box.style.top = boxy + 'px';
+
+                    window.getSelection ? window.getSelection().removeAllRanges() : document.selection.empty();
+                }
+            }
+            document.onmouseup = function () {
+                document.onmousemove = null;
+            }
+
+            close.onmousedown = function (event) {
+                event = event || window.event;
+                event.cancelBubble = true;
+
+                this.onmouseup = function () {
+                    box.style.display = 'none';
+                }
+            }
+            close.onmouseout = function () {
+                this.onmouseup = null;
+            }
+            close.onmousemove = function (event) {
+                window.getSelection ? window.getSelection().removeAllRanges() : document.selection.empty();
+            }
+        }
+    </script>
+
+</head>
+<body>
+
+<div class="nav">
+    <a href="javascript:;" id="register">注册信息</a>
+</div>
+
+<!--用来移动的盒子-->
+<div class="d-box" id="d_box">
+    <!--功能部分-->
+    <div class="hd" id="drop">
+        注册信息 (可以拖拽)
+        <span id="box_close">【关闭】</span>
+    </div>
+    <div class="bd"></div>
+</div>
+
+</body>
+</html>

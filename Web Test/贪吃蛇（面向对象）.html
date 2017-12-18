@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body,html {
+            margin: 0;
+            padding: 0;
+            background-color: black;
+        }
+        .map {
+            width: 700px;
+            height: 700px;
+            background-color: #c1c1c1;
+            margin: 0 auto;
+            position: relative;
+        }
+    </style>
+    <script src="./Food.js"></script>
+    <script src="./Snake.js"></script>
+    <script>
+        window.onload = function () {
+            var map = document.getElementById('map');
+            var running = true;
+            window.foods.initial(5, map);
+            window.snake.initial(5, map , 'right');
+            
+            document.onkeydown = function (event) {
+                event = event || window.event;
+
+                switch (event.code) {
+                    case 'ArrowUp':
+                        if(snake.oldDirection != 'down'){
+                            snake.direction = 'up';
+                        }
+                        break;
+                    case 'ArrowDown':
+                        if(snake.oldDirection != 'up'){
+                            snake.direction = 'down';
+                        }
+                        break;
+                    case 'ArrowLeft':
+                        if(snake.oldDirection != 'right'){
+                            snake.direction = 'left';
+                        }
+                        break;
+                    case 'ArrowRight':
+                        if(snake.oldDirection != 'left'){
+                            snake.direction = 'right';
+                        }
+                        break;
+                    case 'Space':
+                        if(!running){
+                            break;
+                        }
+                        if(!isNaN(timer)){
+                            window.clearInterval(timer);
+                            timer = undefined;
+                        }else{
+                            timer = window.setInterval(function () {
+                                snake.moveOneStep();
+                                if(snake.isEattingSelf() || snake.isHeadOverBound()){
+                                    alert('Game Over!');
+                                    window.clearInterval(timer);
+                                    running = false;
+                                    return;
+                                }
+                                var grow = foods.beEatten(snake[0].element);
+                                if(grow){
+                                    snake.growOneNode();
+                                    foods.addNewFood(1, map);
+                                }
+                            },100);
+                        }
+                        break;
+                    default:
+                }
+            }
+
+            window.clearInterval(timer);
+            var timer = window.setInterval(function () {
+                snake.moveOneStep();
+                if(snake.isEattingSelf() || snake.isHeadOverBound()){
+                    alert('Game Over!');
+                    window.clearInterval(timer);
+                    running = false;
+                    return;
+                }
+                var grow = foods.beEatten(snake[0].element);
+                if(grow){
+                    snake.growOneNode();
+                    foods.addNewFood(1, map);
+                }
+            },100);
+
+        }
+    </script>
+</head>
+<body>
+    <div class="map" id="map"></div>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        html,body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box {
+            margin: 50px auto;
+            width: 600px;
+            height: 400px;
+            background-color: #c1c1c1;
+        }
+        .list {
+            width: 200px;
+            height: 400px;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            float: left;
+            position: relative;
+        }
+        .list li {
+            width: 100%;
+            height: 40px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+        }
+        .list li span {
+            line-height: 40px;
+            padding: 20px;
+        }
+
+        .content {
+            width: 400px;
+            height: 400px;
+            float: right;
+            overflow: hidden;
+        }
+        .pic {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+        .pic li {
+            height: 400px;
+            display: none;
+        }
+        .current {
+            display: block !important;
+        }
+
+    </style>
+    <script>
+        window.onload = function () {
+            var list = document.getElementById('list');
+            var pic = document.getElementById('pic');
+            for(var index = 0 ; index < list.children.length ; index++){
+                var color = 'rgb(' + getRandom_LBRB(0,255) + ',' + getRandom_LBRB(0,255) + ',' + getRandom_LBRB(0,255) + ')';
+                list.children[index].style.backgroundColor = color;
+                pic.children[index].style.backgroundColor = color;
+            }
+
+            for(var index = 0 ; index < list.children.length ; index++){
+                list.children[index].onmouseup = function (index) {
+                    return function () {
+                        for(var i = 0 ; i < pic.children.length ; i++){
+                            pic.children[i].className = '';
+                        }
+                        pic.children[index].className = 'current'
+                    }
+                }(index);
+                list.children[index].onmousedown = function run(index) {
+                    return function (event) {
+                        event = event || window.event;
+//                        var startX = event.pageX || event.clientX + document.documentElement.scrollLeft;
+                        var startY = event.pageY || event.clientY + document.documentElement.scrollTop;
+                        var minusY = startY - this.offsetTop;
+
+                        document.onmousemove = function (event) {
+                            event = event || window.event;
+//                            var moveX = event.pageX || event.clientX + document.documentElement.scrollLeft;
+                            var moveY = event.pageY || event.clientY + document.documentElement.scrollTop;
+                            var nowY = moveY - minusY;
+                            if(nowY < -list.children[index].offsetHeight){
+                                nowY = -list.children[index].offsetHeight;
+                            }
+                            if(nowY > list.offsetHeight){
+                                nowY = list.offsetHeight;
+                            }
+
+                            list.children[index].style.position = 'absolute';
+                            list.children[index].style.top = nowY + 'px';
+//                            list.children[index].style.left = moveX - startX + 'px';
+                            if(index != list.children.length - 1){
+                                list.children[index + 1].style.marginTop = list.children[index].offsetHeight + 'px';
+                            }
+
+                            window.getSelection ? window.getSelection().removeAllRanges() : document.selection.empty();
+                        }
+                        document.onmouseup = function (event) {
+                            document.onmousemove = null;
+
+                            var newIndex = Math.ceil(list.children[index].offsetTop / list.children[index].offsetHeight);
+
+                            list.children[index].style.position = '';
+                            if(index != list.children.length - 1){
+                                list.children[index + 1].style.marginTop = '';
+                            }
+
+                            var store = [];
+                            for(var i = 0 ; i < list.children.length ; i++){
+                                store.push(list.children[i]);
+                            }
+
+                            var exchange = store[index];
+                            store.splice(index, 1);
+                            if(newIndex > index){
+                                newIndex--;
+                            }
+                            if(newIndex < 0){
+                                newIndex = 0;
+                            }
+                            if(newIndex > list.children.length -1){
+                                newIndex = list.children.length -1;
+                            }
+                            store.splice(newIndex, 0 ,exchange);
+
+                            for(var i = 0 ; i < store.length ; i++){
+                                list.appendChild(store[i]);
+                            }
+                            for(var i = 0 ; i < list.children.length ; i++){
+                                list.children[i].onmousedown = run(i);
+                            }
+
+                        }
+                    }
+                }(index)
+            }
+
+            
+        }
+
+        function getRandom_LBRB(min,max){
+            if(min > max){
+                var exchange = min;
+                min = max;
+                max = exchange;
+            }
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            if(min > max){
+                return NaN;
+            }
+            return parseInt(Math.random() * (max - min + 1)) + min;
+        }
+    </script>
+</head>
+<body>
+<div class="box" id="box">
+    <ul class="list" id="list">
+        <li><span>商品1</span></li>
+        <li><span>商品2</span></li>
+        <li><span>商品3</span></li>
+        <li><span>商品4</span></li>
+        <li><span>商品5</span></li>
+        <li><span>商品6</span></li>
+        <li><span>商品7</span></li>
+        <li><span>商品8</span></li>
+        <li><span>商品9</span></li>
+        <li><span>商品10</span></li>
+    </ul>
+    <div class="content" id="content">
+        <ul class="pic" id="pic">
+            <li class="current">商品1</li>
+            <li>商品2</li>
+            <li>商品3</li>
+            <li>商品4</li>
+            <li>商品5</li>
+            <li>商品6</li>
+            <li>商品7</li>
+            <li>商品8</li>
+            <li>商品9</li>
+            <li>商品10</li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

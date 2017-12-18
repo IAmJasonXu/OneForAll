@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        button {
+            width: 100px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 20px;
+            margin: 10px;
+        }
+        div {
+            /*display: none;*/
+            width: 300px;
+            height: 200px;
+            padding-top: 100px;
+            text-align: center;
+            font: 18px/50px "simsun";
+            background-color: lightgreen;
+        }
+    </style>
+    <script src="jquery-1.11.1.js"></script>
+    <script>
+        jQuery(window).ready(function () {
+
+            $("button").eq(0).click(function () {
+
+                $("div").slideToggle(2000);
+            });
+
+
+            $("button").eq(1).click(function () {
+//                （true:后续动画不执行;        false:后续动画会执行）
+//                 // 第二个参数表示当前动画是否执行完
+//                （true:立即执行完成当前动画;   false:立即停止当前动画）
+
+                //后续动画不执行,立即执行完成当前动画
+//                $("div").stop(true,true);
+                //后续动画会执行,立即执行完成当前动画
+//                $("div").stop(false,true);
+                //后续动画不执行,立即停止当前动画
+//                $("div").stop(true,false);
+                //后续动画会执行,立即停止当前动画
+//                $("div").stop(false,false);
+//                $("div").stop();//默认是false，false
+
+
+                //总结1：不用记;  一个一个试;
+                //总结2：执行动画前，先stop();   99%
+            });
+        });
+    </script>
+</head>
+<body>
+    <button>添加动画</button>
+    <button>停止动画</button>
+
+    <div>
+        黎明即起，洒扫庭除，要内外整洁，<br>
+        既昏便息，关锁门户，必亲自检点。<br>
+    </div>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+
+        function Student(name) {
+            this.name = name;
+        }
+        var stu = new Student('Join');
+        console.log(Object.prototype.toString.call(Function.prototype));    //输出对象内部属性[[CLASS]]，如果没有则去找最近原型中的[[CLASS]]...
+        console.log(Function.prototype.toString.call(Object.prototype));    //[[CLASS]]
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

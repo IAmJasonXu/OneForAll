@@ -1,0 +1,295 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>无标题文档</title>
+    <style type="text/css">
+        * {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            border: 0;
+        }
+
+        .all {
+            width: 500px;
+            height: 200px;
+            padding: 7px;
+            border: 1px solid #ccc;
+            margin: 100px auto;
+            position: relative;
+        }
+
+        .screen {
+            width: 500px;
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .screen li {
+            width: 500px;
+            height: 200px;
+            overflow: hidden;
+            float: left;
+        }
+
+        .screen ul {
+            position: absolute;
+            left: 0;
+            top: 0px;
+            width: 10000px;
+        }
+
+        .all ol {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            line-height: 20px;
+            text-align: center;
+        }
+
+        .all ol li {
+            float: left;
+            width: 20px;
+            height: 20px;
+            background: #fff;
+            border: 1px solid #ccc;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        .all ol li.current {
+            background: yellow;
+        }
+
+        #arr {
+            display: none;
+        }
+
+        #arr span {
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            left: 5px;
+            top: 50%;
+            margin-top: -20px;
+            background: #000;
+            cursor: pointer;
+            line-height: 40px;
+            text-align: center;
+            font-weight: bold;
+            font-family: '黑体';
+            font-size: 30px;
+            color: #fff;
+            opacity: 0.3;
+            border: 1px solid #fff;
+        }
+
+        #arr #right {
+            right: 5px;
+            left: auto;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var all = document.getElementById('all');
+            var ul = document.getElementById('ul');
+            var ulLiArr = ul.children;
+            var imgWidth = ulLiArr[0].offsetWidth;
+            var ol = document.getElementById('ol');
+            var olLiArr = ol.children;
+            var arr = document.getElementById('arr');
+            var left = document.getElementById('left');
+            var right = document.getElementById('right');
+            var current = 0;
+            //OL的LI
+            for (var index = 0; index < ulLiArr.length; index++) {
+                var newLi = document.createElement('li');
+                newLi.index = index;
+                newLi.innerHTML = index + 1;
+                ol.appendChild(newLi);
+                newLi.onmouseover = function () {
+                    if (Math.abs(this.index - current) > ulLiArr.length / 2) {
+                        if (current - 0 > ulLiArr.length - 1 - current) {
+                            current = this.index;
+                            scroll(ulLiArr.length - 1, 0, this.index);
+                            return;
+                        } else {
+                            current = this.index;
+                            scroll(0, ulLiArr.length - 1, this.index);
+                            return;
+                        }
+                        return;
+                    }
+                    current = this.index;
+                    scroll(this.index);
+                }
+            }
+            olLiArr[0].className = 'current';
+            ul.appendChild(ulLiArr[0].cloneNode(true));
+            //LEFT和RIGHT
+            left.onclick = function () {
+                if (current == 0) {
+                    jump(ulLiArr.length - 1);
+                    current = ulLiArr.length - 1;
+                }
+                current--;
+                scroll(current);
+            }
+            right.onclick = function () {
+                if (current == ulLiArr.length - 1) {
+                    jump(0);
+                    current = 0;
+                }
+                current++;
+                scroll(current);
+            }
+            //自动滚动
+            all.timer = window.setInterval(function () {
+                if (current == ulLiArr.length - 1) {
+                    jump(0);
+                    current = 0;
+                }
+                current++;
+                scroll(current);
+            }, 2000);
+            all.onmouseover = function () {
+                window.clearInterval(this.timer);
+                arr.style.display = 'block';
+            }
+            all.onmouseout = function () {
+                window.clearInterval(this.timer);
+                arr.style.display = 'none';
+                this.timer = window.setInterval(function () {
+                    if (current == ulLiArr.length - 1) {
+                        jump(0);
+                        current = 0;
+                    }
+                    current++;
+                    scroll(current);
+                }, 2000);
+            }
+
+
+            function jump(target) {
+                ul.style.left = -imgWidth * target + 'px';
+            }
+
+            function scroll(firstIndex, jumpIndex, afterJumpIndex) {
+                for (var index = 0; index < olLiArr.length; index++) {
+                    olLiArr[index].className = '';
+                }
+                if (jumpIndex !== undefined) {
+                    if (afterJumpIndex !== undefined) {
+                        if (afterJumpIndex == olLiArr.length) {
+                            olLiArr[0].className = 'current';
+                        } else {
+                            olLiArr[afterJumpIndex].className = 'current';
+                        }
+                        animate(ul, -imgWidth * firstIndex, true, -imgWidth * jumpIndex, -imgWidth * afterJumpIndex);
+                    } else {
+                        if (jumpIndex == olLiArr.length) {
+                            olLiArr[0].className = 'current';
+                        } else {
+                            olLiArr[jumpIndex].className = 'current';
+                        }
+                        animate(ul, -imgWidth * firstIndex, true, -imgWidth * jumpIndex);
+                    }
+                } else {
+                    if (firstIndex == olLiArr.length) {
+                        olLiArr[0].className = 'current';
+                    } else {
+                        olLiArr[firstIndex].className = 'current';
+                    }
+                    animate(ul, -imgWidth * firstIndex, true);
+                }
+            }
+        }
+
+function animate(ele, target, flag, jumpTarget, afterJumpTarget) {
+    window.clearInterval(ele.timer);
+    ele.timer = window.setInterval(function () {
+        if (flag !== true) {
+            var step = ele.offsetLeft < target ? 10 : -10;
+            var bound = Math.abs(ele.offsetLeft - target) < Math.abs(step);
+        } else if (jumpTarget !== undefined && afterJumpTarget !== undefined) {
+            step = parseInt((Math.abs(target - ele.offsetLeft) + Math.abs(afterJumpTarget - jumpTarget)) * 0.05);
+            step = ele.offsetLeft < target ? step : -step;
+            step = Math.abs(step) < 1 ? (target - ele.offsetLeft > 0 ? 1 : -1) : step;
+            bound = Math.abs(ele.offsetLeft - target) < Math.abs(step);
+        } else {
+            step = parseInt((target - ele.offsetLeft) * 0.05);
+            step = Math.abs(step) < 1 ? (target - ele.offsetLeft > 0 ? 1 : -1) : step;
+            bound = Math.abs(ele.offsetLeft - target) < Math.abs(step);
+        }
+        if (bound) {
+            ele.style.left = target + 'px';
+            window.clearInterval(ele.timer);
+            if (jumpTarget !== undefined) {
+                ele.style.left = jumpTarget + 'px';
+                if (afterJumpTarget !== undefined) {
+                    window.clearInterval(ele.timer);
+                    ele.timer = window.setInterval(function () {
+                        {
+                            if (flag !== true) {
+                                var step = ele.offsetLeft < afterJumpTarget ? 10 : -10;
+                                var bound = Math.abs(ele.offsetLeft - afterJumpTarget) < Math.abs(step);
+                            } else {
+                                step = parseInt((afterJumpTarget - ele.offsetLeft) * 0.05);
+                                step = Math.abs(step) < 1 ? (afterJumpTarget - ele.offsetLeft > 0 ? 1 : -1) : step;
+                                bound = Math.abs(ele.offsetLeft - afterJumpTarget) < Math.abs(step);
+                            }
+                            if (bound) {
+                                ele.style.left = afterJumpTarget + 'px';
+                                window.clearInterval(ele.timer);
+                            } else {
+                                ele.style.left = ele.offsetLeft + step + 'px';
+                            }
+                        }
+                    }, 10);
+                }
+            }
+        } else {
+            ele.style.left = ele.offsetLeft + step + 'px';
+        }
+    }, 10);
+}
+    </script>
+</head>
+
+<body>
+
+<!--外部盒子-->
+<div class="all" id='all'>
+    <!--内部盒子-->
+    <div class="screen" id="screen">
+        <!--图片们-->
+        <ul id="ul">
+            <li><img src="images/1.jpg" width="500" height="200"/></li>
+            <li><img src="images/2.jpg" width="500" height="200"/></li>
+            <li><img src="images/3.jpg" width="500" height="200"/></li>
+            <li><img src="images/4.jpg" width="500" height="200"/></li>
+            <li><img src="images/5.jpg" width="500" height="200"/></li>
+            <li><img src="images/01.jpg" width="500" height="200"/></li>
+            <li><img src="images/02.jpg" width="500" height="200"/></li>
+            <li><img src="images/03.jpg" width="500" height="200"/></li>
+            <li><img src="images/04.jpg" width="500" height="200"/></li>
+            <li><img src="images/05.jpg" width="500" height="200"/></li>
+        </ul>
+        <!--小方块-->
+        <ol id="ol">
+
+        </ol>
+        <!--小三角-->
+        <div id="arr">
+            <span id="left"><</span>
+            <span id="right">></span>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
+

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>杨辉三角</title>
+    <script>
+        function yhThreeAngle(num) {
+            var arr = [];
+            arr.push([1]);
+            for(var index = 1 ; index < num ; index++){
+                arr.push([]);
+                arr[index].push(arr[index - 1][0]);
+                for(var index_i = 1 ; index_i < arr[index - 1].length ; index_i++){
+                    arr[index].push(arr[index - 1][index_i - 1] + arr[index - 1][index_i]);
+                }
+                arr[index].push(arr[index - 1][arr[index - 1].length - 1]);
+            }
+            return arr;
+        }
+        var arr = yhThreeAngle(20);
+        for(var index = 0 ; index < arr.length ; index++){
+            console.log(arr[index].join());
+        }
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>
