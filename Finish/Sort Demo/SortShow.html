@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>排序</title>
+    <style>
+        body,
+        html {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .input {
+            height: 80px;
+            line-height: 80px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .input input.sort {
+            width: 400px;
+        }
+
+        .input input.speed {
+            width: 100px;
+        }
+
+        div[class^="show"] {
+            width: 100%;
+            height: 150px;
+            margin-bottom: 5px;
+            border: 2px solid black;
+            text-align: center;
+            position: relative;
+        }
+
+        div.showHeapSort {
+            height: 600px;
+        }
+    </style>
+    <script src="./jquery.min.js"></script>
+    <script>
+        var INTERVAL = 1000;
+        $(function () {
+            var inputJQ = $(".input input#sort");
+            var speedJQ = $(".input input.speed");
+
+            speedJQ.on("change", function () {
+                INTERVAL = isNaN(Number(this.value)) ? 1000 : Number(this.value);
+            });
+
+            $(".input button").eq(0).on("click", function () {
+                $("div.showBubbleSort").children().remove();
+                var sortArr = [];
+                if (inputJQ.val().indexOf(",") > -1) {
+                    sortArr = inputJQ.val().split(",");
+                } else {
+                    sortArr.push(inputJQ.val());
+                }
+                for (var index = 0; index < sortArr.length; index++) {
+                    var num = Number(sortArr[index]);
+                    sortArr[index] = $("<div>" + num + "</div>").css({
+                        width: "48px",
+                        height: "48px",
+                        background: "#ccc",
+                        border: "1px solid black",
+                        position: "absolute",
+                        left: 100 + index * 60 + "px",
+                        top: "50px"
+                    });
+                    sortArr[index].value = num;
+                    $("div.showBubbleSort").append(sortArr[index]);
+                }
+
+                bubbleSort(sortArr, compare);
+
+            }).end().eq(1).on("click", function () {
+                $("div.showQuickSort").children().remove();
+                var sortArr = [];
+                if (inputJQ.val().indexOf(",") > -1) {
+                    sortArr = inputJQ.val().split(",");
+                } else {
+                    sortArr.push(inputJQ.val());
+                }
+                for (var index = 0; index < sortArr.length; index++) {
+                    var num = Number(sortArr[index]);
+                    sortArr[index] = $("<div>" + num + "</div>").css({
+                        width: "48px",
+                        height: "48px",
+                        background: "#ccc",
+                        border: "1px solid black",
+                        position: "absolute",
+                        left: 100 + index * 60 + "px",
+                        top: "50px"
+                    });
+                    sortArr[index].value = num;
+                    $("div.showQuickSort").append(sortArr[index]);
+                }
+
+                quickSort(sortArr, compare);
+
+            }).end().eq(2).on("click", function () {
+                $("div.showCollapseSort").children().remove();
+                var sortArr = [];
+                if (inputJQ.val().indexOf(",") > -1) {
+                    sortArr = inputJQ.val().split(",");
+                } else {
+                    sortArr.push(inputJQ.val());
+                }
+                for (var index = 0; index < sortArr.length; index++) {
+                    var num = Number(sortArr[index]);
+                    sortArr[index] = $("<div>" + num + "</div>").css({
+                        width: "48px",
+                        height: "48px",
+                        background: "#ccc",
+                        border: "1px solid black",
+                        position: "absolute",
+                        left: 100 + index * 60 + "px",
+                        top: "40px"
+                    });
+                    sortArr[index].value = num;
+                    $("div.showCollapseSort").append(sortArr[index]);
+                }
+
+                collapseSort(sortArr, compare);
+
+            }).end().eq(3).on("click", function () {
+                $("div.showHeapSort").children().remove();
+                var sortArr = [];
+                if (inputJQ.val().indexOf(",") > -1) {
+                    sortArr = inputJQ.val().split(",");
+                } else {
+                    sortArr.push(inputJQ.val());
+                }
+                for (var index = 0; index < sortArr.length; index++) {
+                    var num = Number(sortArr[index]);
+                    sortArr[index] = $("<div>" + num + "</div>").css({
+                        width: "48px",
+                        height: "48px",
+                        background: "#ccc",
+                        border: "1px solid black",
+                        position: "absolute",
+                        left: 100 + index * 60 + "px",
+                        top: "40px"
+                    });
+                    sortArr[index].value = num;
+                    $("div.showHeapSort").append(sortArr[index]);
+                }
+
+                heapSort(sortArr, compare);
+
+            });
+        });
+
+
+        function bubbleSort(array, compare) {
+            //排序计数
+            var sortCount = 0;
+            //循环计数
+            var loopCount = 0;
+            var exchange = false;
+
+            window.clearInterval(array.timer);
+            array.timer = window.setInterval(function () {
+                if (sortCount < array.length - 1) {
+                    if (loopCount < array.length - 1 - sortCount) {
+
+                        array[loopCount].siblings(":not(.complete)").css({ background: "#ccc" });
+                        array[loopCount].css({ background: "red" });
+                        array[loopCount + 1].css({ background: "red" });
+
+                        if (compare(array[loopCount + 1], array[loopCount])) {
+                            array[loopCount].animate({ top: "0px" }, INTERVAL / 4);
+                            array[loopCount + 1].animate({ top: "0px" }, INTERVAL / 4);
+
+                            var left = 100 + loopCount * 60;
+                            array[loopCount].animate({ left: 100 + (loopCount + 1) * 60 + "px" }, INTERVAL / 4);
+                            array[loopCount + 1].animate({ left: left + "px" }, INTERVAL / 4);
+
+                            array[loopCount].animate({ top: "50px" }, INTERVAL / 4);
+                            array[loopCount + 1].animate({ top: "50px" }, INTERVAL / 4);
+
+                            var store = array[loopCount];
+                            array[loopCount] = array[loopCount + 1];
+                            array[loopCount + 1] = store;
+
+                            exchange = true;
+                        }
+                        loopCount++;
+
+                    } else {
+                        if (!exchange) {
+                            array[loopCount].parent().children(":not(.complete)").css({ background: "green" });
+                            window.clearInterval(array.timer);
+                            return;
+                        } else {
+                            exchange = false;
+                            sortCount++;
+                            array[loopCount].addClass("complete").css({ background: "green" });
+                            loopCount = 0;
+                            return;
+                        }
+                    }
+                } else {
+                    array[loopCount].parent().children().css({ background: "green" });
+                    window.clearInterval(array.timer);
+                    return;
+                }
+
+            }, INTERVAL);
+        }
+
+
+        function quickSort(array, compare) {
+            onceRank(array, 0, array.length - 1);
+
+            function onceRank(arr, first, last) {
+
+                var index_front = first;
+                var index_after = last;
+                var atFront = true;
+                var store = arr[first];
+                store.addClass("target").css({ background: "red" }).animate({ top: "0px" }, INTERVAL / 4);
+
+                window.clearInterval(store.timer);
+                store.timer = window.setInterval(function () {
+                    if (index_front < index_after) {
+                        if (atFront === true) {
+                            arr[index_after].removeClass("compare");
+                            if (index_after + 1 < arr.length) {
+                                arr[index_after + 1].removeClass("compare");
+                            }
+                            arr[index_after].addClass("compare").css({ background: "purple" }).siblings(":not(.target,.compare)").css({ background: "#ccc" });
+                            var resultOfCompare = compare(arr[index_after], store);
+                            if (!(resultOfCompare)) {
+                                index_after--;
+                            } else {
+                                arr[index_after].animate({ top: "0px" }, INTERVAL / 4);
+
+                                var left = 100 + index_after * 60;
+                                arr[index_after].animate({ left: 100 + index_front * 60 + "px" }, INTERVAL / 4);
+                                store.animate({ left: left + "px" }, INTERVAL / 4);
+
+                                arr[index_after].animate({ top: "50px" }, INTERVAL / 4);
+
+                                arr[index_front] = arr[index_after];
+                                atFront = false;
+                            }
+                            return;
+                        } else if (atFront === false) {
+                            arr[index_front].removeClass("compare");
+                            if (index_front - 1 > -1) {
+                                arr[index_front - 1].removeClass("compare");
+                            }
+                            arr[index_front].addClass("compare").css({ background: "purple" }).siblings(":not(.target,.compare)").css({ background: "#ccc" });
+                            var resultOfCompare = compare(store, arr[index_front]);
+                            if (!(resultOfCompare)) {
+                                index_front++;
+                            } else {
+                                arr[index_front].animate({ top: "0px" }, INTERVAL / 4);
+
+                                var left = 100 + index_front * 60;
+                                arr[index_front].animate({ left: 100 + index_after * 60 + "px" }, INTERVAL / 4);
+                                store.animate({ left: left + "px" }, INTERVAL / 4);
+
+                                arr[index_front].animate({ top: "50px" }, INTERVAL / 4);
+
+                                arr[index_after] = arr[index_front];
+                                atFront = true;
+                            }
+                            return;
+                        }
+                    } else {
+                        arr[index_front].removeClass("compare");
+                        if (index_after + 1 < arr.length) {
+                            arr[index_after + 1].removeClass("compare");
+                        }
+                        if (index_front - 1 > -1) {
+                            arr[index_front - 1].removeClass("compare");
+                        }
+                        store.siblings(":not(.target,.compare)").css({ background: "#ccc" });
+                        store.css({ background: "green" }).animate({ top: "50px" }, INTERVAL / 4);
+                        arr[index_front] = store;
+                        window.clearInterval(store.timer);
+
+                        if (first < index_front - 1) {
+                            onceRank(arr, first, index_front - 1);
+                        } else {
+                            arr[first].addClass("target").css({ background: "green" });
+                        }
+                        if (index_front + 1 < last) {
+                            onceRank(arr, index_front + 1, last);
+                        } else {
+                            arr[last].addClass("target").css({ background: "green" });
+                        }
+
+                        return;
+                    }
+                }, INTERVAL);
+            }
+        }
+
+
+        function collapseSort(array, compare) {
+            var completeArr = [];
+            var timerArr = [];
+
+            collapse(array, 0, Math.floor((array.length - 1) / 2), array.length - 1);
+
+            function collapse(arr, front, middle, behind) {
+                var complete_index = completeArr.length;
+                var timer_index = timerArr.length;
+                completeArr[complete_index] = false;
+                timerArr[timer_index] = null;
+
+                if (front < middle) {
+                    var front_complete_index = collapse(arr, front, Math.floor((front + middle) / 2), middle);
+                }
+                if (middle + 1 < behind) {
+                    var behind_complete_index = collapse(arr, middle + 1, Math.floor((middle + 1 + behind) / 2), behind);
+                }
+
+                window.clearInterval(timerArr[timer_index]);
+                timerArr[timer_index] = window.setInterval(function () {
+                    if ((front_complete_index === undefined || completeArr[front_complete_index] === true) && (behind_complete_index === undefined || completeArr[behind_complete_index] === true)) {
+                        var arr_left = [];
+                        var arr_right = [];
+                        var color = "rgb(" + getRandom_LBRB(0, 255) + "," + getRandom_LBRB(0, 255) + "," + getRandom_LBRB(0, 255) + ")";
+                        for (var index = front; index <= middle; index++) {
+                            arr_left.push(arr[index]);
+                            arr[index].animate({ top: "90px" }, INTERVAL / 4).css({ background: color, border: "3px solid black" });
+                        }
+                        for (var index = middle + 1; index <= behind; index++) {
+                            arr_right.push(arr[index]);
+                            arr[index].animate({ top: "90px" }, INTERVAL / 4).css({
+                                background: color,
+                                border: "3px solid #cfcfcf"
+                            });
+                        }
+
+                        var index = front;
+                        window.clearInterval(timerArr[timer_index]);
+                        timerArr[timer_index] = window.setInterval(function () {
+                            if (arr_left.length && arr_right.length) {
+                                arr[index] = compare(arr_left[0], arr_right[0]) ? arr_left.shift() : arr_right.shift();
+                                arr[index].animate({
+                                    top: "40px",
+                                    left: 100 + index * 60 + "px"
+                                }, INTERVAL / 4).css({ background: "green", border: "0px solid green" });
+                                index++;
+                            } else {
+                                if (arr_left.length == 0) {
+                                    if (arr_right.length > 0) {
+                                        arr[index] = arr_right.shift();
+                                        arr[index].animate({
+                                            top: "40px",
+                                            left: 100 + index * 60 + "px"
+                                        }, INTERVAL / 4).css({ background: "green", border: "0px solid green" });
+                                        index++;
+                                    }
+                                } else {
+                                    if (arr_left.length > 0) {
+                                        arr[index] = arr_left.shift();
+                                        arr[index].animate({
+                                            top: "40px",
+                                            left: 100 + index * 60 + "px"
+                                        }, INTERVAL / 4).css({ background: "green", border: "0px solid green" });
+                                        index++;
+                                    }
+                                }
+                                if (arr_left.length == 0 && arr_right.length == 0) {
+                                    window.clearInterval(timerArr[timer_index]);
+                                    completeArr[complete_index] = true;
+                                }
+                            }
+                        }, INTERVAL);
+                    }
+                }, INTERVAL);
+                return complete_index;
+            }
+        }
+
+
+        function heapSort(array, compare) {
+            var heap = [null];
+            heap[0] = $("<div>" + heap[0] + "</div>").css({
+                width: "48px",
+                height: "48px",
+                background: "#eee",
+                border: "3px solid black",
+                position: "absolute",
+                left: 100 + "px",
+                top: "100px"
+            }).appendTo($("div.showHeapSort"));
+
+            var index_copy = 0;
+            var index_display = 1;
+            var index_heap = Math.floor((array.length) / 2);
+            var index_array = 0;
+            var moving = false;
+            window.clearInterval(array.timer);
+            array.timer = window.setInterval(function () {
+                if (moving) {
+                    return;
+                }
+                if (index_copy < array.length) {
+                    heap.push(array[index_copy]);
+                    array[index_copy].css({ background: "#eee", border: "3px solid black" }).animate({ top: "100px", left: 100 + (index_copy + 1) * 60 + "px" }, INTERVAL / 4);
+                    index_copy++;
+                } else {
+                    if (index_display < heap.length) {
+                        heap[index_display].animate({
+                            top: 100 + getLevel(index_display) * 60 + "px",
+                            left: getLeft(index_display, getLevel(heap.length - 1)) + "px"
+                        });
+                        index_display++;
+                    } else {
+                        if (index_heap > 0) {
+                            moveDown(heap, index_heap);
+                            index_heap--;
+                        } else {
+                            if (heap.length > 1) {
+                                array[index_array] = heap[1];
+                                heap[1] = heap[heap.length - 1];
+                                heap[1].animate({ top: array[index_array].css("top"), left: array[index_array].css("left") }, INTERVAL / 4);
+                                array[index_array].css({ background: "green", border: "1px solid black" }).animate({ top: "40px", left: 100 + index_array * 60 + "px" }, INTERVAL / 4);
+                                heap.length = heap.length - 1;
+
+                                if (heap.length > 1) {
+                                    moveDown(heap, 1);
+                                }
+                                index_array++;
+                            } else {
+                                heap[0].remove();
+                                window.clearInterval(array.timer);
+                            }
+                        }
+                    }
+                }
+            }, INTERVAL);
+
+
+            function moveDown(arr, index) {
+                moving = true;
+
+                arr[index].css({ background: "red" });
+                arr[Math.floor(index / 2)].css({ background: "#eee" });
+
+                window.clearInterval(arr.timer);
+                arr.timer = window.setInterval(function () {
+                    if ((index * 2) >= arr.length) {
+                        arr[index].css({ background: "#eee" });
+                        window.clearInterval(arr.timer);
+                        moving = false;
+                        return;
+                    }
+                    var compare_left = true;
+                    var exchange = arr[index];
+                    var top = arr[index].css("top");
+                    var left = arr[index].css("left");
+                    if ((index * 2 + 1) < arr.length) {
+                        compare_left = compare(arr[index * 2], arr[index * 2 + 1]);
+                    }
+                    if (compare_left) {
+                        if (!compare(arr[index], arr[index * 2])) {
+                            arr[index] = arr[index * 2].css({ background: "pink" });
+                            arr[index * 2] = exchange;
+                            arr[index * 2].animate({
+                                top: arr[index].css("top"),
+                                left: arr[index].css("left")
+                            }, INTERVAL / 4);
+                            arr[index].animate({ top: top, left: left }, INTERVAL / 4);
+                            moveDown(arr, index * 2);
+                        } else {
+                            arr[index].css({ background: "#eee" });
+                            window.clearInterval(arr.timer);
+                            moving = false;
+                            return;
+                        }
+                    } else {
+                        if (!compare(arr[index], arr[index * 2 + 1])) {
+                            arr[index] = arr[index * 2 + 1].css({ background: "pink" });
+                            arr[index * 2 + 1] = exchange;
+                            arr[index * 2 + 1].animate({
+                                top: arr[index].css("top"),
+                                left: arr[index].css("left")
+                            }, INTERVAL / 4);
+                            arr[index].animate({ top: top, left: left }, INTERVAL / 4);
+                            moveDown(arr, index * 2 + 1);
+                        } else {
+                            arr[index].css({ background: "#eee" });
+                            window.clearInterval(arr.timer);
+                            moving = false;
+                            return;
+                        }
+                    }
+                }, INTERVAL);
+            }
+
+            function getLevel(index) {
+                var level = 1;
+                while (true) {
+                    if ((index <= Math.pow(2, level) - 1) && (index > Math.pow(2, level - 1) - 1)) {
+                        break;
+                    }
+                    level++;
+                }
+                return level;
+            }
+
+            function getGap(level, height) {
+                var gap = 10;
+                var width = 50;
+                for (var i = height; i > level; i--) {
+                    gap = gap * 2 + width;
+                }
+                return gap;
+            }
+
+            function getLeft(index, height) {
+                var level = getLevel(index);
+                var left = 100;
+                var width = 50;
+                for (var i = height; i > level; i--) {
+                    left = left + width / 2 + getGap(i, height) / 2;
+                }
+                left = left + (index - Math.pow(2, level - 1)) * (width + getGap(level, height));
+                return left;
+            }
+
+        }
+
+
+        function compare(left, right) {
+            return left.value < right.value;
+        }
+
+        function getRandom_LBRB(min, max) {
+            if (min > max) {
+                var exchange = min;
+                min = max;
+                max = exchange;
+            }
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            if (min > max) {
+                return NaN;
+            }
+            return parseInt(Math.random() * (max - min + 1)) + min;
+        }
+
+    </script>
+</head>
+
+<body>
+
+    <div class="input">
+        <lable for="sort">排序：</lable>
+        <input type="text" id="sort" placeholder="请输入待排序数据" value="55,1,5,7,3,22,11,33,44,8,159,77,66,88,99,852,357,741,369" class="sort">
+        <button>Bubble</button>
+        <button>Quick</button>
+        <button>Collapse</button>
+        <button>Heap</button>
+        <input type="text" placeholder="speed" value="1000" class="speed">
+    </div>
+
+    <div class="showBubbleSort">
+
+    </div>
+
+    <div class="showQuickSort">
+
+    </div>
+
+    <div class="showCollapseSort">
+
+    </div>
+
+    <div class="showHeapSort">
+
+    </div>
+
+</body>
+
+</html>

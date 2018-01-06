@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background-color: rgba(201, 21, 35, 0);
+            box-sizing: border-box;
+            padding-left: 80px;
+            padding-right: 60px;
+            z-index: 10;
+        }
+        header .input {
+            width: 100%;
+            height: 30px;
+            margin-top: 5px;
+            border-radius: 15px;
+            padding-left: 30px;
+            line-height: 35px;
+        }
+        header .logo {
+            position: absolute;
+            width: 60px;
+            height: 20px;
+            left: 10px;
+            top: 10px;
+            background: url("./images/jd-sprites.png") no-repeat 0px -110px;
+            background-size: 200px 200px;
+            text-indent: -999em;
+        }
+        header .login {
+            position: absolute;
+            width: 40px;
+            height: 20px;
+            right: 7px;
+            top: 9px;
+            color: #fff;
+        }
+        header .search {
+            position: absolute;
+            left: 87px;
+            top: 10px;
+            width: 20px;
+            height: 20px;
+            background: url("./images/jd-sprites.png") no-repeat -60px -110px;
+            background-size: 200px 200px;
+            text-indent: -999em;
+        }
+
+        .main {
+            width: 100%;
+            height: 3000px;
+            background-color: #F5F5F5;
+        }
+        .main .view {
+            width: 100%;
+        }
+        .main .nav {
+            width: 100%;
+            background-color: #FFF;
+            overflow: hidden;
+        }
+        .main .nav ul {
+            width: 100%;
+        }
+        .main .nav li {
+            float: left;
+            width: 25%;
+            text-align: center;
+        }
+        .main .nav li img {
+            width: 39px;
+            margin: 10px auto 5px;
+        }
+        .main .nav li a {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .secondKill {
+            width: 100%;
+            margin-top: 6px;
+            padding: 0 10px;
+            box-sizing: border-box;
+            background-color: #FFF;
+        }
+        .secondKill .label {
+            position: relative;
+            width: 100%;
+            padding: 10px 0;
+            overflow: hidden;
+        }
+        .secondKill .label .words {
+            float: left;
+            padding-left: 20px;
+            padding-right: 5px;
+            font-size: 15px;
+            line-height: 1em;
+            color: #CA1327;
+            font-weight: normal;
+        }
+        .secondKill .label .words:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 5px;
+            width: 20px;
+            height: 26px;
+            background: url("./images/jd-sprites.png") no-repeat -85px -110px;
+            background-size: 200px 200px;
+        }
+        .secondKill .label .timeOut {
+            float: left;
+        }
+        .secondKill .label span {
+            display: block;
+            float: left;
+            font-size: 13px;
+            line-height: 1;
+        }
+        .secondKill .label span:nth-child(3n+1) {
+            background-color: #000;
+            color: #FFF;
+            padding: 1px 0px 2px 3px;
+            border-radius: 3px 0 0 3px;
+        }
+        .secondKill .label span:nth-child(3n+2) {
+            background-color: #000;
+            color: #FFF;
+            padding: 1px 3px 2px 0px;
+            border-radius: 0 3px 3px 0;
+        }
+        .secondKill .label span:nth-child(3n+3) {
+            color: #000;
+            padding: 0px 3px;
+        }
+        .secondKill .label .more {
+            float: right;
+        }
+        .secondKill .label a {
+            color: #666;
+            font-size: 12px;
+            padding-right: 10px;
+        }
+        .secondKill .label a::after {
+            content: "";
+            position: absolute;
+            width: 7px;
+            height: 12px;
+            right: 0px;
+            top: 12px;
+            background: url(./images/jd-sprites.png) no-repeat -187px -51px;
+            background-size: 200px 200px; 
+        }
+        .secondKill .content,
+        .secondKill .content ul {
+            width: 100%;
+            background-color: #FFF;
+            overflow: hidden;
+            text-align: center;
+        }
+        .secondKill .content li {
+            position: relative;
+            float: left;
+            width: 33.33333%;
+            padding: 0px 10px;
+            box-sizing: border-box;
+        }
+        .secondKill .content a {
+            position: relative;
+            width: 100%;
+        }
+        .secondKill .content img {
+            width: 100%;
+        }
+        .secondKill .content strong {
+            position: absolute;
+            padding: 5px;
+            right: 0;
+            bottom: 0;
+            background-color: #fdb60a;
+            border-radius: 50%;
+            font-size: 10px;
+            line-height: 1;
+            color: #FFF;
+        }
+        .secondKill .content p:nth-child(2) {
+            margin-top: 8px;
+            color: #ed5657;
+            font-size: 14px;
+        }
+        .secondKill .content p:nth-child(3) {
+            margin-top: 4px;
+            color: #888888;
+            text-decoration: line-through;
+            font-size: 10px;
+        }
+
+        .banner {
+            width: 100%;
+        }
+        .banner>img {
+            display: block;
+            width: 100%;
+        }
+        .banner .upper {
+            position: absolute;
+            width: 100%;
+            left: 0;
+            bottom: 0px;
+            padding: 0px 10px;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+        .banner .upper .left {
+            float: left;
+            width: 50%;
+        }
+        .banner .upper .right {
+            float: right;
+            width: 50%;
+        }
+        .banner .upper img {
+            display: block;
+            width: 100%;
+        }
+
+        .hot,
+        .hot ul,
+        .hot ul li {
+            width: 100%;
+            overflow: hidden;
+        }
+        .hot li img {
+            float: left;
+        }
+        .hot li:nth-child(1) img {
+            width: 33.333333%;
+        }
+        .hot li:nth-child(2) img {
+            width: 50%;
+        }
+        .hot li:nth-child(3) img {
+            width: 50%;
+        }
+
+        .ad {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .ad img {
+            width: 100%;
+        }
+
+        .themeStreet {
+            width: 100%;
+            overflow: hidden;
+        }
+        .themeStreet h4 {
+            height: 34px;
+            line-height: 34px;
+            padding: 0 10px;
+            font-size: 16px;
+            color: #f25353;
+            background-color: #FFF;
+            font-weight: normal;
+        }
+        .themeStreet ul li:nth-child(1) {
+            float: left;
+            width: 50%;
+        }
+        .themeStreet li:nth-child(1) img {
+            width: 100%;
+        }
+        .themeStreet ul li:nth-child(2) {
+            float: right;
+            width: 50%;
+        }
+        .themeStreet li:nth-child(2) img {
+            width: 100%;
+        }
+        .themeStreet ul li:nth-child(3) {
+            float: right;
+            width: 50%;
+        }
+        .themeStreet li:nth-child(3) img {
+            float: left;
+            width: 50%;
+        }
+        .themeStreet ul li:nth-child(4) {
+            clear: both;
+        }
+        .themeStreet li:nth-child(4) img {
+            float:left;
+            width: 25%;
+        }
+        .themeStreet ul li:nth-child(5) {
+            clear: both;
+        }
+        .themeStreet li:nth-child(5) img {
+            float: left;
+            width: 25%;
+        }
+
+        .introduce,
+        .introduce h4,
+        .introduce ul {
+            width: 100%;
+            overflow: hidden;
+        }
+        .introduce h4 {
+            height: 34px;
+            line-height: 34px;
+            padding: 0 10px;
+            box-sizing: border-box;
+            font-size: 16px;
+            color: #f25353;
+            background-color: #FFF;
+            font-weight: normal;
+        }
+        .introduce ul li:nth-child(1) {
+            float: left;
+            width: 40%;
+        }
+        .introduce ul li:nth-child(2) {
+            float: left;
+            width: 30%;
+        }
+        .introduce ul li:nth-child(3) {
+            float: left;
+            width: 30%;
+        }
+
+        .guess {
+            width: 100%;
+            box-sizing: border-box;
+            background-color: #FFF;
+            overflow: hidden;
+        }
+        .guess h4 {
+            padding: 10px 10px;
+            overflow: hidden;
+        }
+        .guess h4 span {
+            float: left;
+            font-size: 16px;
+            font-weight: normal;
+        }
+        .guess h4 a {
+            position: relative;
+            float: right;
+            font-size: 12px;
+            font-weight: normal;
+            padding-right: 12px;
+            color: #f15353;
+        }
+        .guess h4 a::before {
+            content: "";
+            position: absolute;
+            left: -20px;
+            top: 0px;
+            width: 18px;
+            height: 18px;
+            background: url("./images/icon-login.png") no-repeat 0px 0px;
+            background-size: 18px 18px;
+        }
+        .guess h4 a::after {
+            content: "";
+            position: absolute;
+            right: -4px;
+            top: 7px;
+            width: 12px;
+            height: 12px;
+            background-color: red;
+            background: url("./images/icon-right.png") no-repeat 0px 0px;
+            background-size: 4px 7px;
+        }
+        .guess ul li {
+            width: 50%;
+            float: left;
+            margin: 10px 0px 16px;
+            padding: 0px 10px;
+            box-sizing: border-box;
+        }
+        .guess ul .content {
+            width: 100%;
+        }
+        .guess .content span {
+            height: 40px;
+            line-height: 20px;
+            margin-top: 8px;
+            color: #333;
+            font-size: 13px;
+            display: -webkit-box;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            word-break: break-all;
+        }
+
+        .footer {
+            position: fixed;
+            width: 100%;
+            height: 50px;
+            left: 0px;
+            bottom: 0px;
+            background: #FFF;
+        }
+        .footer li {
+            float: left;
+            width: 20%;
+            height: 100%;
+        }
+        .footer li img {
+            width: 57px;
+            margin: 5px auto;
+        }
+    </style>
+    <script>
+        window.onload = function(){
+            var header = document.querySelector("header");
+
+            window.addEventListener('scroll',function(event){
+                event = event || window.event;
+                var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                var opacity = scrollTop / 400;
+                header.style.backgroundColor = 'rgba(201, 21, 35, ' + (opacity > 1? 1 : opacity) + ')';  
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <header class="header">
+        <input type="text" placeholder="100万件超级爆品疯抢" class="input">
+        <a href="javascript:;" class="search">搜索</a>
+        <a href="javascript:;" class="logo">京东</a>
+        <a href="javascript:;" class="login">登录</a>
+    </header>
+    <main class="main">
+        <div class="view">
+            <a href="javascript:;">
+                <img src="./uploads/slide_1.jpg" alt="" class="view">
+            </a>
+        </div>
+
+        <div class="nav">
+            <ul>
+                <li><a href="javascript:;"><img src="./images/nav_1.png" alt=""><span>京东超市</span></a></li>
+                <li><a href="javascript:;"><img src="./images/nav_2.png" alt=""><span>全球购</span></a></li>
+                <li><a href="javascript:;"><img src="./images/nav_3.png" alt=""><span>充值中心</span></a></li>
+                <li><a href="javascript:;"><img src="./images/nav_4.png" alt=""><span>服装城</span></a></li>
+                <li><a href="javascript:;"><img src="./images/nav_5.png" alt=""><span>理财</span></a></li>
+                <li><a href="javascript:;"><img src="./images/nav_6.png" alt=""><span>领券</span></a></li>
+                <li><a href="javascript:;"><img src="./images/nav_7.png" alt=""><span>物流查询</span></a></li>
+                <li><a href="javascript:;"><img src="./images/nav_8.png" alt=""><span>我的关注</span></a></li>
+            </ul>
+        </div>
+
+        <div class="secondKill">
+            <div class="label">
+                <div class="left">
+                    <h4 class="words">掌上秒杀</h4>
+                    <div class="timeOut">
+                        <span>0</span>
+                        <span>2</span>
+                        <span>:</span>
+                        <span>5</span>
+                        <span>6</span>
+                        <span>:</span>
+                        <span>4</span>
+                        <span>2</span>
+                    </div>
+                </div>
+                <div class="right">
+                    <a href="javascript:;" class="more">更多秒杀</a>
+                </div>
+            </div>
+            <div class="content">
+                <ul>
+                    <li>
+                        <a href="javascript:;">
+                            <img src="./uploads/seckill_1.jpg" alt="">
+                            <strong>热卖</strong>
+                        </a>
+                        <p>&yen79</p>
+                        <p>&yen138</p>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <img src="./uploads/seckill_2.jpg" alt="">
+                            <strong>热卖</strong>
+                        </a>
+                        <p>&yen169</p>
+                        <p>&yen238</p>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <img src="./uploads/seckill_3.jpg" alt="">
+                            <strong>推荐</strong>
+                        </a>
+                        <p>&yen179</p>
+                        <p>&yen198</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="banner">
+            <img src="./uploads/banner_bg.jpg" alt="">
+            <div class="upper">
+                <div class="left">
+                    <img src="./uploads/banner_1.jpg" alt="">
+                </div>
+                <div class="right">
+                    <img src="./uploads/banner_2.jpg" alt="">
+                    <img src="./uploads/banner_3.jpg" alt="">
+                </div>
+            </div>
+        </div>
+
+        <div class="hot">
+            <ul>
+                <li>
+                    <img src="./uploads/major_1.jpg" alt="">
+                    <img src="./uploads/major_2.jpg" alt="">
+                    <img src="./uploads/major_3.jpg" alt="">
+                </li>
+                <li>
+                    <img src="./uploads/major_4.jpg" alt="">
+                    <img src="./uploads/major_5.jpg" alt="">
+                </li>
+                <li>
+                    <img src="./uploads/major_6.jpg" alt="">
+                    <img src="./uploads/major_7.jpg" alt="">
+                </li>
+            </ul>
+        </div>
+
+        <div class="ad">
+            <img src="./uploads/advert_3.jpg" alt="">
+        </div>
+        
+        <div class="themeStreet">
+            <h4>主题街</h4>
+            <ul>
+                <li>
+                    <img src="./uploads/theme_1.jpg" alt="">
+                </li>
+                <li>
+                    <img src="./uploads/theme_2.jpg" alt="">
+                </li>
+                <li>
+                    <img src="./uploads/theme_3.jpg" alt="">
+                    <img src="./uploads/theme_4.jpg" alt="">
+                </li>
+                <li>
+                    <img src="./uploads/theme_5.jpg" alt="">
+                    <img src="./uploads/theme_6.jpg" alt="">
+                    <img src="./uploads/theme_7.jpg" alt="">
+                    <img src="./uploads/theme_8.jpg" alt="">
+                </li>
+                <li>
+                    <img src="./uploads/theme_9.jpg" alt="">
+                    <img src="./uploads/theme_10.jpg" alt="">
+                    <img src="./uploads/theme_11.jpg" alt="">
+                    <img src="./uploads/theme_12.jpg" alt="">
+                </li>
+            </ul>
+        </div>
+
+        <div class="ad">
+            <img src="./uploads/advert_4.jpg" alt="">
+        </div>  
+
+        <div class="introduce">
+            <h4>品牌推荐</h4>
+            <ul>
+                <li><a href="javascript:;"><img src="./uploads/brand_1.jpg" alt=""></a></li>
+                <li><a href="javascript:;"><img src="./uploads/brand_2.jpg" alt=""></a></li>
+                <li><a href="javascript:;"><img src="./uploads/brand_3.jpg" alt=""></a></li>
+            </ul>
+        </div>
+
+        <div class="ad">
+            <img src="./uploads/advert_7.jpg" alt="">
+        </div>
+
+        <div class="guess">
+            <h4>
+                <span>猜你喜欢</span>
+                <a href="javascript:;" class="login">登陆后更懂你</a>
+            </h4>
+            <ul>
+                <li>
+                    <a href="javascript:;" class="content">
+                        <img src="./uploads/item_1.jpg" alt="">
+                        <span>曼秀雷敦（Mentholatum）控油抗痘洁面乳150ml（男士洗面奶 洁面 控油）</span>
+                    </a>
+                    <div>
+                        <span>&yen25.20</span>
+                        <a href="javascript:;">看相似</a>
+                    </div>
+                </li>
+                <li>
+                    <a href="javascript:;" class="content">
+                        <img src="./uploads/item_2.jpg" alt="">
+                        <span>Apple iPad Pro平板电脑 9.7 英寸（32G WLAN版/A9X芯片/Retina显示屏/Multi-Touch技术MM172CH）玫瑰金色</span>
+                    </a>
+                    <div>
+                        <span>&yen109.00</span>
+                        <a href="javascript:;">看相似</a>
+                    </div>
+                </li>
+                <li>
+                    <a href="javascript:;" class="content">
+                        <img src="./uploads/item_1.jpg" alt="">
+                        <span>曼秀雷敦（Mentholatum）控油抗痘洁面乳150ml（男士洗面奶 洁面 控油）</span>
+                    </a>
+                    <div>
+                        <span>&yen25.20</span>
+                        <a href="javascript:;">看相似</a>
+                    </div>
+                </li>
+                <li>
+                    <a href="javascript:;" class="content">
+                        <img src="./uploads/item_2.jpg" alt="">
+                        <span>Apple iPad Pro平板电脑 9.7 英寸（32G WLAN版/A9X芯片/Retina显示屏/Multi-Touch技术MM172CH）玫瑰金色</span>
+                    </a>
+                    <div>
+                        <span>&yen109.00</span>
+                        <a href="javascript:;">看相似</a>
+                    </div>
+                </li>
+                <li>
+                    <a href="javascript:;" class="content">
+                        <img src="./uploads/item_1.jpg" alt="">
+                        <span>曼秀雷敦（Mentholatum）控油抗痘洁面乳150ml（男士洗面奶 洁面 控油）</span>
+                    </a>
+                    <div>
+                        <span>&yen25.20</span>
+                        <a href="javascript:;">看相似</a>
+                    </div>
+                </li>
+                <li>
+                    <a href="javascript:;" class="content">
+                        <img src="./uploads/item_2.jpg" alt="">
+                        <span>Apple iPad Pro平板电脑 9.7 英寸（32G WLAN版/A9X芯片/Retina显示屏/Multi-Touch技术MM172CH）玫瑰金色</span>
+                    </a>
+                    <div>
+                        <span>&yen109.00</span>
+                        <a href="javascript:;">看相似</a>
+                    </div>
+                </li>
+                <li>
+                    <a href="javascript:;" class="content">
+                        <img src="./uploads/item_1.jpg" alt="">
+                        <span>曼秀雷敦（Mentholatum）控油抗痘洁面乳150ml（男士洗面奶 洁面 控油）</span>
+                    </a>
+                    <div>
+                        <span>&yen25.20</span>
+                        <a href="javascript:;">看相似</a>
+                    </div>
+                </li>
+                <li>
+                    <a href="javascript:;" class="content">
+                        <img src="./uploads/item_2.jpg" alt="">
+                        <span>Apple iPad Pro平板电脑 9.7 英寸（32G WLAN版/A9X芯片/Retina显示屏/Multi-Touch技术MM172CH）玫瑰金色</span>
+                    </a>
+                    <div>
+                        <span>&yen109.00</span>
+                        <a href="javascript:;">看相似</a>
+                    </div>
+                </li>
+                <li>
+                    <a href="javascript:;" class="content">
+                        <img src="./uploads/item_1.jpg" alt="">
+                        <span>曼秀雷敦（Mentholatum）控油抗痘洁面乳150ml（男士洗面奶 洁面 控油）</span>
+                    </a>
+                    <div>
+                        <span>&yen25.20</span>
+                        <a href="javascript:;">看相似</a>
+                    </div>
+                </li>
+                <li>
+                    <a href="javascript:;" class="content">
+                        <img src="./uploads/item_2.jpg" alt="">
+                        <span>Apple iPad Pro平板电脑 9.7 英寸（32G WLAN版/A9X芯片/Retina显示屏/Multi-Touch技术MM172CH）玫瑰金色</span>
+                    </a>
+                    <div>
+                        <span>&yen109.00</span>
+                        <a href="javascript:;">看相似</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </main>
+    <footer class="footer">
+        <ul>
+            <li><a href="javascript:;"><img src="./images/index-icon.png" alt=""></a></li>
+            <li><a href="javascript:;"><img src="./images/sort-icon.png" alt=""></a></li>
+            <li><a href="javascript:;"><img src="./images/618-icon.png" alt=""></a></li>
+            <li><a href="javascript:;"><img src="./images/cart-icon.png" alt=""></a></li>
+            <li><a href="javascript:;"><img src="./images/center-icon.png" alt=""></a></li>
+        </ul>
+    </footer>
+</body>
+
+</html>

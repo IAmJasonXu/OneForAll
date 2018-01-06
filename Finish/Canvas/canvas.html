@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .base {
+            width: 1200px;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="base line">
+        <canvas width="800" height="600" id="lineChart"></canvas>
+    </div>
+    <script>
+        window.addEventListener('load', function () {
+            var canvas = document.querySelector('canvas#lineChart');
+            var datas = [
+                { x: 100, y: 100 },
+                { x: 200, y: 120 },
+                { x: 300, y: 180 },
+                { x: 400, y: 300 },
+                { x: 500, y: 140 }
+            ];
+
+
+            function LineChart(canvas, options) {
+                this.init(canvas, options);
+            }
+            LineChart.prototype.init = function (canvas, options) {
+                options = options || {};
+
+                this.context = canvas.getContext('2d');
+                this.contextWidth = canvas.offsetWidth;
+                this.contextHeight = canvas.offsetHeight;
+
+                var defaultSpace = 20;
+                this.spaceX = options.spaceX || defaultSpace;
+                this.spaceY = options.spaceY || defaultSpace;
+
+                this.zeroX = this.spaceX;
+                this.zeroY = this.contextHeight - this.spaceY;
+
+                var defaultSize = 8;
+                this.pointSize = options.pointSize || defaultSize;
+
+                var defaultWidth = 2;
+                this.lineWidth = options.lineWidth || defaultWidth;
+
+                var defaultLength = 10;
+                this.arrowLength = options.arrowLength || defaultLength;
+
+            }
+            LineChart.prototype.drawChart = function (datas) {
+                this.datas = this.transformDatas(datas);
+                this.drawAxis();
+                this.drawPoints(this.datas);
+                this.drawLines(this.datas);
+            }
+            LineChart.prototype.transformDatas = function (datas) {
+                var results = [];
+                for (var i = 0; i < datas.length; i++) {
+                    results.push({ x: this.zeroX + datas[i].x, y: this.zeroY - datas[i].y });
+                }
+                return results;
+            }
+            LineChart.prototype.drawAxis = function () {
+                this.context.beginPath();
+                this.context.moveTo(this.zeroX, this.zeroY);
+                this.context.lineTo(this.contextWidth - this.spaceX, this.zeroY);
+                this.context.lineTo(this.contextWidth - this.spaceX - this.arrowLength, this.zeroY - this.arrowLength / 4);
+                this.context.lineTo(this.contextWidth - this.spaceX - this.arrowLength, this.zeroY + this.arrowLength / 4);
+                this.context.lineTo(this.contextWidth - this.spaceX, this.zeroY);
+                this.context.closePath();
+                this.context.fill();
+                this.context.stroke();
+
+                this.context.beginPath();
+                this.context.moveTo(this.zeroX, this.zeroY);
+                this.context.lineTo(this.zeroX, this.spaceY);
+                this.context.lineTo(this.zeroX - this.arrowLength / 4, this.spaceY + this.arrowLength);
+                this.context.lineTo(this.zeroX + this.arrowLength / 4, this.spaceY + this.arrowLength);
+                this.context.lineTo(this.zeroX, this.spaceY);
+                this.context.closePath();
+                this.context.fill();
+                this.context.stroke();
+
+            }
+            LineChart.prototype.drawPoints = function (datas) {
+                for (var i = 0; i < datas.length; i++) {
+                    this.drawPoint(datas[i]);
+                }
+            }
+            LineChart.prototype.drawPoint = function (data) {
+                this.context.beginPath();
+                this.context.fillRect(data.x - this.pointSize / 2, data.y - this.pointSize / 2, this.pointSize, this.pointSize);
+            }
+            LineChart.prototype.drawLines = function (datas) {
+                this.context.beginPath();
+                this.context.moveTo(this.zeroX, this.zeroY);
+                for (var i = 0; i < datas.length; i++) {
+                    this.context.lineTo(datas[i].x, datas[i].y);
+                }
+                this.context.closePath;
+                this.context.stroke();
+            }
+
+            var chart = new LineChart(canvas);
+            chart.drawChart(datas);
+
+        });
+    </script>
+
+    <div class="base circle">
+        <canvas width="800" height="600" id="circleChart"></canvas>
+    </div>
+    <script>
+        window.addEventListener('load', function () {
+            var canvas = document.querySelector('canvas#circleChart');
+            var context = canvas.getContext('2d');
+
+            var datas = [
+                { item: '0-10岁', num: 20 },
+                { item: '10-20岁', num: 120 },
+                { item: '20-30岁', num: 200 },
+                { item: '30-40岁', num: 300 },
+                { item: '40-60岁', num: 400 },
+                { item: '60-80岁', num: 500 }
+            ];
+
+            function CircleChart(canvas, options) {
+                this.init(canvas, options);
+            }
+            CircleChart.prototype.init = function (canvas, options) {
+                this.canvas = canvas;
+                this.context = canvas.getContext('2d');
+
+                this.circleX = options.circleX || canvas.width / 2 + 100;
+                this.circleY = options.circleY || canvas.height / 2;
+
+                this.radium = options.radium || 200;
+
+                this.randomColor = options.randomColor || function () {
+                    return 'rgb(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ')';
+                };
+
+                this.extendLength = options.extendLength || 20;
+
+                this.spaceX = options.spaceX || 10;
+                this.spaceY = options.spaceY || 10;
+                this.squareWidth = options.squareWidth || 40;
+                this.squareHeight = options.squareHeight || 20;
+                this.gap = options.gap || 10;
+
+            };
+            CircleChart.prototype.drawChart = function (datas) {
+                var results = this.transformDatas(datas);
+                this.drawItems(results);
+                this.drawCircle(results);
+
+                var _this = this;
+                if (this.canvas.mousemoveListener) {
+                    this.canvas.removeEventListener('mousemove', this.canvas.mousemoveListener);
+                }
+                var listener = function (event) {
+                    event = event || window.event;
+                    _this.mousemove(event, results);
+                }
+                this.canvas.mousemoveListener = listener;
+                this.canvas.addEventListener('mousemove', listener);
+            };
+            CircleChart.prototype.transformDatas = function (datas) {
+                var results = [];
+                var sum = 0;
+                for (var i = 0; i < datas.length; i++) {
+                    sum += datas[i].num;
+                }
+                for (var i = 0; i < datas.length; i++) {
+                    results.push({ description: datas[i].item, angle: datas[i].num / sum * 2 * Math.PI, color: this.randomColor() });
+                }
+                return results;
+            };
+            CircleChart.prototype.drawItems = function (datas) {
+                var currentX = this.spaceX;
+                var currentY = this.spaceY;
+                for (var i = 0; i < datas.length; i++) {
+                    this.drawItem(currentX, currentY + i * (this.squareHeight + this.gap), datas[i].color, datas[i].description);
+                }
+            };
+            CircleChart.prototype.drawItem = function (startX, startY, color, text) {
+                this.context.beginPath();
+                this.context.rect(startX, startY, this.squareWidth, this.squareHeight);
+                this.context.closePath();
+                this.context.fillStyle = color;
+                this.context.fill();
+
+                this.context.beginPath();
+                this.context.textBaseLine = 'bottom';
+                this.context.fillText(text, startX + this.squareWidth + this.gap, startY + this.squareHeight - 5);
+            }
+            CircleChart.prototype.drawCircle = function (datas, focusIndex) {
+                var currentAngle = 0;
+                for (var i = 0; i < datas.length; i++) {
+                    this.drawSector(currentAngle, currentAngle + datas[i].angle, datas[i].color, focusIndex === i);
+                    this.drawExtend(currentAngle, currentAngle + datas[i].angle, datas[i].color, datas[i].description);
+                    currentAngle += datas[i].angle;
+                }
+            };
+            CircleChart.prototype.drawSector = function (startAngle, endAngle, color, focus) {
+                this.context.beginPath();
+                this.context.moveTo(this.circleX, this.circleY);
+                this.context.arc(this.circleX, this.circleY, this.radium + (focus? 10 : 0) , startAngle, endAngle, false);
+                this.context.closePath();
+                this.context.fillStyle = color;
+                this.context.fill();
+            };
+            CircleChart.prototype.drawExtend = function (startAngle, endAngle, color, text) {
+                var angle = (startAngle + endAngle) / 2;
+                var startX = this.circleX + this.radium * Math.cos(angle);
+                var startY = this.circleY + this.radium * Math.sin(angle);
+                var middleX = this.circleX + (this.radium + this.extendLength) * Math.cos(angle);
+                var middleY = this.circleY + (this.radium + this.extendLength) * Math.sin(angle);
+                var textLength = this.context.measureText(text).width;
+                var endX = middleX + (middleX < this.circleX ? -textLength : textLength);
+                var endY = middleY;
+                var fontX = (middleX < this.circleX ? middleX - textLength : middleX);
+                var fontY = middleY - 5;
+                this.context.beginPath();
+                this.context.moveTo(startX, startY);
+                this.context.lineTo(middleX, middleY);
+                this.context.lineTo(endX, endY);
+                this.context.strokeStyle = color;
+                this.context.stroke();
+                this.fillStyle = color;
+                this.context.fillText(text, fontX, fontY);
+            };
+            CircleChart.prototype.mousemove = function (event, datas) {
+                var mouseX = event.offsetX;
+                var mouseY = event.offsetY;
+                // console.log(mouseX, mouseY);
+                this.context.clearRect(0,0,this.canvas.width, this.canvas.height);
+                if(Math.pow(mouseX - this.circleX, 2) + Math.pow(mouseY - this.circleY, 2) <= Math.pow(this.radium, 2)){
+                    var cos = (mouseX - this.circleX) / Math.pow(Math.pow(mouseX - this.circleX, 2) + Math.pow(mouseY - this.circleY, 2), 0.5);
+                    var angle = mouseY > this.circleY ? Math.acos(cos) :  2 * Math.PI - Math.acos(cos);
+                    // console.log(angle); 
+                    var startAngle = 0;
+                    var focusIndex = 0;
+                    for(var i = 0 ; i < datas.length ; i++){
+                        if(angle > startAngle && angle < startAngle + datas[i].angle){
+                            focusIndex = i;
+                            break;
+                        }
+                        startAngle += datas[i].angle;
+                    }
+                    // console.log(focusIndex);
+
+                    this.drawItems(datas);
+                    this.drawCircle(datas, focusIndex);
+                }else{
+                    this.drawItems(datas);
+                    this.drawCircle(datas);
+                }
+            }
+
+            var chart = new CircleChart(canvas, {});
+            chart.drawChart(datas);
+
+        });
+    </script>
+</body>
+
+</html>

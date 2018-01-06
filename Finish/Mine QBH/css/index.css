@@ -1,0 +1,702 @@
+
+#fp-nav {
+  position: fixed;
+  z-index: 100;
+  margin-top: -32px;
+  top: 50%;
+  opacity: 1;
+  -webkit-transform: translate3d(0,0,0);
+}
+#fp-nav.right {
+  right: 17px;
+}
+#fp-nav.left {
+  left: 17px;
+}
+.fp-slidesNav{
+  position: absolute;
+  z-index: 4;
+  opacity: 1;
+  -webkit-transform: translate3d(0,0,0);
+  -ms-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);
+  left: 0 !important;
+  right: 0;
+  margin: 0 auto !important;
+}
+.fp-slidesNav.bottom {
+  bottom: 17px;
+}
+.fp-slidesNav.top {
+  top: 17px;
+}
+#fp-nav ul,
+.fp-slidesNav ul {
+margin: 0;
+padding: 0;
+}
+#fp-nav ul li,
+.fp-slidesNav ul li {
+  display: block;
+  width: 14px;
+  height: 13px;
+  margin: 7px;
+  position:relative;
+}
+.fp-slidesNav ul li {
+  display: inline-block;
+}
+#fp-nav ul li a,
+.fp-slidesNav ul li a {
+  display: block;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  text-decoration: none;
+}
+#fp-nav ul li a.active span,
+.fp-slidesNav ul li a.active span,
+#fp-nav ul li:hover a.active span,
+.fp-slidesNav ul li:hover a.active span{
+  height: 12px;
+  width: 12px;
+  margin: -6px 0 0 -6px;
+  border-radius: 100%;
+}
+#fp-nav ul li a span,
+.fp-slidesNav ul li a span {
+  border-radius: 50%;
+  position: absolute;
+  z-index: 1;
+  height: 4px;
+  width: 4px;
+  border: 0;
+  background: #333;
+  left: 50%;
+  top: 50%;
+  margin: -2px 0 0 -2px;
+  -webkit-transition: all 0.1s ease-in-out;
+  -moz-transition: all 0.1s ease-in-out;
+  -o-transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
+}
+#fp-nav ul li:hover a span,
+.fp-slidesNav ul li:hover a span{
+  width: 10px;
+  height: 10px;
+  margin: -5px 0px 0px -5px;
+}
+#fp-nav ul li .fp-tooltip {
+  position: absolute;
+  top: -2px;
+  color: #fff;
+  font-size: 14px;
+  font-family: arial, helvetica, sans-serif;
+  white-space: nowrap;
+  max-width: 220px;
+  overflow: hidden;
+  display: block;
+  opacity: 0;
+  width: 0;
+  cursor: pointer;
+}
+#fp-nav ul li:hover .fp-tooltip,
+#fp-nav.fp-show-active a.active + .fp-tooltip {
+  -webkit-transition: opacity 0.2s ease-in;
+  transition: opacity 0.2s ease-in;
+  width: auto;
+  opacity: 1;
+}
+#fp-nav ul li .fp-tooltip.right {
+  right: 20px;
+}
+#fp-nav ul li .fp-tooltip.left {
+  left: 20px;
+}
+
+
+
+.shopping-center {
+  position: fixed;
+  right: 100px;
+  bottom: 650px;
+  width: 60px;
+  height: 60px;
+  z-index: 1000;
+}
+
+
+/*第一页*/
+.qbh-title {
+  position: relative;
+  background-image: url("../image/qbh-title-bg.png");
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  background-size: 60%;
+}
+
+.qbh-title .qbh-title-sofa {
+  position: absolute;
+  left: 50%;
+  bottom: 343px;
+  margin-left: -195px;
+  animation: sofamove 2s linear 0s infinite;
+}
+@keyframes sofamove {
+  0% {
+    bottom: 343px;
+  }
+  50% {
+    bottom: 303px;
+  }
+  100% {
+    bottom: 343px;
+  }
+}
+
+.qbh-title .qbh-title-name {
+  position: absolute;
+  right: 300px;
+  bottom: 400px;
+  animation: namemove 2s linear 0s infinite;
+}
+@keyframes namemove {
+  0% {
+    bottom: 500px;
+  }
+  50% {
+    bottom: 550px;
+  }
+  100% {
+    bottom: 500px;
+  }
+}
+
+.qbh-title .qbh-title-extra {
+  position: absolute;
+  bottom: 100px;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+
+/*第二页*/
+.qbh-list {
+  position: relative;
+  background-image: url('../image/qbh-list-bg.png');
+  background-position: center bottom;
+  background-repeat: no-repeat;
+}
+
+.qbh-list .qbh-list-word {
+  position: absolute;
+  width: 363px;
+  height: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 550px;
+  z-index: 1;
+}
+.qbh-list .qbh-list-word img {
+  position: absolute;
+}
+.qbh-list .qbh-list-word img:first-child {
+  display: block;
+}
+.qbh-list .qbh-list-word img:last-child {
+  display: none;
+}
+
+.qbh-list .qbh-list-computer {
+  position: absolute;
+  width: 574px;
+  height: 287px;
+  left: 50%;
+  margin-left: -290px;
+  bottom: 197px;
+}
+
+.qbh-list .qbh-list-computer .qbh-list-search-box {
+  position: absolute;
+  width: 222px;
+  height: 45px;
+  left: 700px;
+  bottom: 120px;
+  background-image: url("../image/qbh-list-search-box.png");
+  background-position: 0px 0px;
+  background-repeat: no-repeat;
+
+}
+.qbh-list .qbh-list-computer .qbh-list-search-box>img {
+  position: absolute;
+  right: 30px;
+  bottom: 11px;
+  display: none;
+}
+
+.qbh-list .qbh-list-computer .qbh-list-search-finish {
+  position: absolute;
+  width: 222px;
+  left: 200px;
+  bottom: 120px;
+  display: none;
+}
+
+.qbh-list .qbh-list-computer .qbh-list-sofa-box {
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+}
+
+.qbh-list .qbh-list-computer .qbh-list-sofas {
+  position: absolute;
+  right: 60px;
+  bottom: 10px;
+  width: 0px;
+  /*width: 441px;*/
+}
+
+.qbh-list .qbh-list-computer .qbh-list-sofa {
+  position: absolute;
+  right: 285px;
+  bottom: 140px;
+  width: 100px;
+  display: none;
+  z-index: 1;
+}
+
+
+/*第三页*/
+.qbh-buy {
+  position: relative;
+  background-image: url("../image/qbh-buy-main-bg.png");
+  background-position: center 80px;
+  background-repeat: no-repeat;
+}
+
+.qbh-buy .qbh-buy-select {
+  position: absolute;
+  bottom: 125px;
+  left: 50%;
+  margin-left: 38px;
+}
+
+.qbh-buy .qbh-buy-add {
+  position: relative;
+  width: 218px;
+  height: 58px;
+  margin-top: 20px;
+}
+.qbh-buy .qbh-buy-choose {
+  position: relative;
+  width: 296px;
+  height: 131px;
+}
+
+.qbh-buy div div img {
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+}
+
+.qbh-buy div div img:last-child {
+  display: none;
+}
+
+
+/*第四页*/
+.qbh-info {
+  position: relative;
+  background-image: url("../image/qbh-info-bg.png");
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
+
+.qbh-info .qbh-info-cloud {
+  position: absolute;
+  left: 100px;
+  bottom: 600px;
+  width: 882px;
+  height: 120px;
+  background-image: url("../image/qbh-info-cloud.png");
+  animation: cloudmove 10s linear 0s alternate infinite;
+}
+@keyframes cloudmove {
+  from {
+    left: 100px;
+  }
+  to {
+    left: 500px;
+  }
+}
+
+.qbh-info .qbh-info-cart {
+  position: absolute;
+  width: 407px;
+  height: 346px;
+  background-image: url("../image/qbh-info-cart.png");
+  background-repeat: no-repeat;
+  left: 500px;
+  bottom: 50px;
+}
+.qbh-info .qbh-info-cart>img {
+  position: absolute;
+  left: 30px;
+  bottom: 960px;
+  display: none;
+  z-index: -1;
+}
+
+.qbh-info-word {
+  position: absolute;
+  width: 429px;
+  height: 32px;
+  left: 50%;
+  margin-left: -214px;
+  bottom: 550px;
+  display: none;
+}
+.qbh-info-word>img {
+  position: absolute;
+}
+.qbh-info-word>img:last-child {
+  display: none;
+}
+
+.qbh-info-address-box {
+  position: absolute;
+  width: 283px;
+  height: 270px;
+  left: 50%;
+  margin-left: -141px;
+  bottom: 250px;
+  background-image: url("../image/qbh-info-address-box.png");
+  background-repeat: no-repeat;
+  display: none;
+}
+.qbh-info-address-box .qbh-info-address {
+  position: absolute;
+  left: 50px;
+  top: 60px;
+  display: none;
+}
+
+
+/*第五页*/
+.qbh-payment {
+  background-image: url("../image/qbh-payment-bg.png");
+  background-position: center center;
+  overflow: hidden;
+}
+
+.qbh-payment .qbh-payment-box {
+  width: 1200px;
+  height: 100%;
+  margin: 0 auto;
+}
+.qbh-payment .qbh-payment-box .qbh-payment-left {
+  position: relative;
+  float: left;
+  width: 600px;
+  height: 100%;
+}
+.qbh-payment .qbh-payment-box .qbh-payment-right {
+  position: relative;
+  float: right;
+  width: 600px;
+  height: 100%;
+}
+
+.qbh-payment-left>img {
+  position: absolute;
+}
+.qbh-payment-left>img.qbh-payment-bill {
+  left: 250px;
+  bottom: 300px;
+}
+.qbh-payment-left>img.qbh-payment-cards {
+  left: 150px;
+  bottom: 270px;
+  z-index: 1;
+}
+.qbh-payment-left>img.qbh-payment-font {
+  left: 100px;
+  bottom: 570px;
+}
+.qbh-payment-left>img.qbh-payment-sofa-rotate {
+  left: 215px;
+  bottom: 1000px;
+}
+
+.qbh-payment-right>img {
+  position: absolute;
+}
+.qbh-payment-right>img.qbh-payment-mouse-start {
+  left: 250px;
+  bottom: 220px;
+}
+.qbh-payment-right>img.qbh-payment-mouse-end {
+  left: 250px;
+  bottom: 220px;
+  display: none;
+}
+.qbh-payment-right>img.qbh-payment-hands {
+  left: 220px;
+  bottom: -500px;
+}
+
+
+/*第六页*/
+.qbh-delivery {
+  position: relative;
+}
+
+.qbh-delivery .qbh-delivery-cloud-one {
+  position: absolute;
+  left: 100px;
+  bottom: 660px;
+  animation: cloudonemoving 25s linear 0s infinite;
+  z-index: 1;
+}
+.qbh-delivery .qbh-delivery-cloud-two {
+  position: absolute;
+  left: 400px;
+  bottom: 550px;
+  animation: cloudtwomoving 25s linear 2s infinite;
+  z-index: 2;
+}
+
+@keyframes cloudonemoving {
+  from {
+    left: 100px;
+  }
+  50% {
+    left: 400px;
+  }
+  to {
+    left: 100px;
+  }
+}
+@keyframes cloudtwomoving {
+  from {
+    left: 400px;
+  }
+  50% {
+    left: 800px;
+  }
+  to {
+    left: 400px;
+  }
+}
+
+.qbh-delivery .qbh-delivery-bg-box {
+  position: absolute;
+  width: 2500px;
+  height: 600px;
+  left: 0px;
+  bottom: 0px;
+}
+.qbh-delivery-bg-box .qbh-delivery-door {
+  position: absolute;
+  right: 284px;
+  bottom: 116px;
+  display: none;
+}
+.qbh-delivery-bg-box .qbh-delivery-buyer {
+  position: absolute;
+  right: 300px;
+  bottom: 125px;
+  width: 14px;
+  display: none;
+}
+
+.qbh-delivery .qbh-delivery-word {
+  position: absolute;
+  width: 308px;
+  height: 59px;
+  left: 360px;
+  bottom: 500px;
+}
+.qbh-delivery-word>img:first-child {
+  position: absolute;
+}
+.qbh-delivery-word>img:last-child {
+  position: absolute;
+  display: none;
+}
+
+.qbh-delivery .qbh-delivery-truck {
+  position: absolute;
+  width: 221px;
+  height: 122px;
+  left: 400px;
+  bottom: 0px;
+  background-image: url("../image/qbh-delivery-truck.png");
+  background-repeat: no-repeat;
+  z-index: 2;
+}
+
+.qbh-delivery-truck-font {
+  position: absolute;
+  right: -20px;
+  bottom: 120px;
+  display: none;
+}
+
+.qbh-delivery-truck .qbh-delivery-box {
+  position: absolute;
+  width: 123px;
+  height: 85px;
+  left: -500px;
+  bottom: 500px;
+  background-image: url("../image/qbh-delivery-box.png");
+  background-repeat: no-repeat;
+}
+.qbh-delivery-truck .qbh-delivery-rotate-sofa {
+  position: absolute;
+  width: 215px;
+  left: 473px;
+  bottom: 400px;
+  display: none;
+  z-index: -1;
+}
+.qbh-delivery-truck .qbh-delivery-deliveryman {
+  position: absolute;
+  left: 180px;
+  bottom: 0px;
+  width: 40px;
+  display: none;
+}
+.qbh-delivery-truck .qbh-delivery-shouhuo {
+  position: absolute;
+  left: 400px;
+  bottom: 480px;
+  display: none;
+}
+
+
+/*第七页*/
+.qbh-appraise {
+  position: relative;
+  background: url("../image/qbh-appraise-bg.png") no-repeat center bottom;
+}
+
+.qbh-appraise .qbh-appraise-stars {
+  position: absolute;
+  width: 100px;
+  height: 40px;
+  left: 50%;
+  bottom: 435px;
+  margin-left: -295px;
+  overflow: hidden;
+  /*background-color: rgba(0,0,0,0.1);*/
+  animation: showstars 5s steps(5) 0s both paused;
+}
+
+@keyframes showstars {
+  from {
+    width: 0px;
+  }
+  to {
+    width: 100px;
+  }
+}
+
+.qbh-appraise .qbh-appraise-star:nth-child(1) {
+  position: absolute;
+  left: 2px;
+  bottom: 10px;
+}
+.qbh-appraise .qbh-appraise-star:nth-child(2) {
+  position: absolute;
+  left: 22px;
+  bottom: 10px;
+}
+.qbh-appraise .qbh-appraise-star:nth-child(3) {
+  position: absolute;
+  left: 42px;
+  bottom: 10px;
+}
+.qbh-appraise .qbh-appraise-star:nth-child(4) {
+  position: absolute;
+  left: 62px;
+  bottom: 10px;
+}
+.qbh-appraise .qbh-appraise-star:nth-child(5) {
+  position: absolute;
+  left: 83px;
+  bottom: 10px;
+}
+
+.qbh-appraise .qbh-appraise-haoping {
+  position: absolute;
+  left: 50%;
+  margin-left: -280px;
+  bottom: 385px;
+  animation: showhaoping 1s ease-in 5s both paused;
+}
+
+@keyframes showhaoping {
+  from {
+    transform: rotateY(90deg);
+  }
+  to {
+    transform: rotateY(0deg);
+  }
+}
+
+
+/*第八页*/
+.qbh-shopping {
+  position: relative;
+  background-image: url("../image/qbh-shopping-bg.png");
+}
+
+.qbh-shopping .qbh-shopping-hands {
+  position: absolute;
+  left: 400px;
+  bottom: 0px;
+}
+
+.qbh-shopping .qbh-shopping-btn {
+  position: absolute;
+  width: 389px;
+  height: 156px;
+  left: 50%;
+  margin-left:  -194px;
+  bottom: 400px;
+}
+
+.qbh-shopping .qbh-shopping-again {
+  position: absolute;
+  width: 105px;
+  height: 34px;
+  left: 50%;
+  margin-left: 220px;
+  bottom: 420px;
+}
+
+.down {
+  position: fixed;
+  right: 100px;
+  bottom: 100px;
+  animation: updown 1s linear alternate infinite;
+  z-index: 999;
+  display: none;
+}
+
+@keyframes updown {
+  from {
+      bottom: 100px;
+  }
+  50% {
+      bottom: 120px;
+  }
+  to {
+      bottom: 100px;
+  }
+}

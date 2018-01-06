@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="/static/assets/vendors/bootstrap/css/bootstrap.css">
+	<script src="/static/assets/vendors/jquery/jquery.js"></script>
+	<script src="jquery.twbsPagination.min.js"></script>
+</head>
+<body>
+	<ul id="list"></ul>
+
+
+	<script>
+		//插件的下载地址：
+		//https://github.com/esimakin/twbs-pagination
+		//文档地址：
+		//http://esimakin.github.io/twbs-pagination/
+		$('#list').twbsPagination({
+  			totalPages: 35,
+  			visiblePages: 7,
+  			startPage:2,
+  			first:"第一页",
+  			onPageClick: function (event, page) {
+    			$('#page-content').text('Page ' + page);
+  			}
+});
+	</script>
+</body>
+</html>

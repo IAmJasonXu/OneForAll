@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas width="1000px" height="500px" style="background-color:rgb(128, 116, 196);">您的浏览器版本过低，需要立即升级</canvas>
+    <script>
+        window.onload = function () {
+            var canvas = document.querySelector('canvas');
+            var context = canvas.getContext('2d');
+
+            // context.beginPath();
+            // context.moveTo(450, 50);
+            // context.lineTo(650, 50);
+            // context.lineTo(450, 150);
+            // context.fillStyle = 'blue';
+            // context.strokeStyle = 'red';
+            // context.fill();
+            // context.stroke();
+
+            // context.beginPath();
+            // context.moveTo(450, 200);
+            // context.lineTo(650, 200);
+            // context.lineTo(450, 300);
+            // context.fillStyle = 'blue';
+            // context.strokeStyle = 'red';
+            // context.closePath();
+            // context.fill();
+            // context.stroke();
+
+            // context.beginPath();
+            // context.moveTo(50, 50);
+            // context.lineTo(400, 50);
+            // context.strokeStyle = 'darkblue';
+            // context.setLineDash([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+            // context.lineWidth = 10;
+            // context.stroke();
+
+            // context.beginPath();
+            // context.moveTo(50, 100);
+            // context.lineTo(400, 100);
+            // context.strokeStyle = 'darkblue';
+            // context.setLineDash([1, 3, 5, 7, 9]);
+            // context.stroke();
+
+            // context.beginPath();
+            // context.strokeStyle = 'black';
+            // context.lineWidth = 5;
+            // context.setLineDash([]);
+            // context.strokeRect(50, 150, 350, 50);
+
+            // context.beginPath();
+            // context.fillStyle = 'green';
+            // context.fillRect(900, 400, 100, 100);
+
+            // context.beginPath();
+            // context.clearRect(950, 450, 50, 50);
+
+            // function linearGradient(b_X, e_X) {
+            //     for (var i = b_X; i < e_X; i++) {
+            //         context.beginPath();
+            //         context.moveTo(i, 300);
+            //         context.lineTo(i + 1, 300);
+            //         context.lineWidth = 10;
+            //         context.strokeStyle = 'rgb(' + i + ',0,0)';
+            //         context.closePath();
+            //         context.stroke();
+            //     }
+            // }
+            // linearGradient(50,350);
+
+            // function strokeArrow(b_X){
+            //     context.strokeStyle = 'black';
+            //     for (var i = 1; i <= 20; i++) {
+            //         context.beginPath();
+            //         context.moveTo(b_X, 350);
+            //         context.lineTo(b_X + i, 350);
+            //         context.lineWidth = 10 - i / 2;
+            //         context.closePath();
+            //         context.stroke();
+            //     }
+            // }
+            // strokeArrow(50);
+
+            // context.beginPath();
+            // context.moveTo(canvas.width / 2, canvas.height / 2);
+            // context.arc(canvas.width / 2, canvas.height / 2, 100, 0, 0.5 * Math.PI, true);
+            // context.closePath();
+            // context.stroke();
+
+            // context.beginPath();
+            // context.strokeRect(100,100,100,100);
+            // context.stroke();
+
+            // context.beginPath();
+            // context.moveTo(150,150);
+            // // context.lineTo(200,150);
+            // context.arcTo(200,200,150,200,50);
+            // context.stroke();
+
+            // var n = 1;
+            // var circleX = canvas.width / 2;
+            // var circleY = canvas.height / 2;
+            // window.setInterval(function(){
+            //     for(var i = 0 ; i < n ; i++ ){
+            //         context.beginPath();
+            //         context.moveTo(circleX, circleY);
+            //         context.arc(circleX, circleY, 150, (360 / n) * i * Math.PI / 180 , (360 / n) * (i + 1) * Math.PI / 180);
+            //         context.closePath();
+            //         context.fillStyle = getRandomColor();
+            //         context.fill();
+            //     }
+            //     n = ((n + 1) % 360);
+            //     console.log(n);
+            // },100);
+
+            // function getRandomColor(){
+            //     return 'rgb('+Math.floor(Math.random()*256)+','+ Math.floor(Math.random() * 256)+','+ Math.floor(Math.random() * 256)+')';
+            // }
+        }
+    </script>
+</body>
+
+</html>

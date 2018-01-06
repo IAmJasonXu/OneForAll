@@ -308,6 +308,7 @@ li {
 }
 
 body {
+  /* 设置了body的最小宽度和最小高度 */
     min-width: 1000px;
     min-height: 600px;
 }

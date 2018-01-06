@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>百度搜索</title>
+	<style>
+		body,
+		html {
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			height: 100%;
+			overflow: hidden;
+		}
+
+		.search {
+			width: 400px;
+			height: 40px;
+			margin: 10px auto 0px;
+		}
+
+		.search input {
+			float: left;
+			width: 295px;
+			height: 30px;
+		}
+
+		.search button {
+			float: left;
+			width: 100px;
+			height: 36px;
+		}
+
+		.history {
+			width: 400px;
+			height: 20px;
+			margin: 0 auto;
+			padding: 0;
+			/*border: 1px solid black;*/
+			list-style: none;
+			text-align: center;
+		}
+
+		#clear {
+			display: block;
+			width: 400px;
+			height: 30px;
+			margin: 0 auto;
+		}
+	</style>
+	<script>
+		window.onload = function () {
+			var btn = document.querySelector('#btn');
+			var input = document.querySelector('#input');
+			var history = document.querySelector('#history');
+			var clear = document.querySelector('#clear');
+
+			btn.onclick = function () {
+				if (input.value !== '') {
+					window.localStorage.setItem('history' + Math.floor(Math.random() * 10000000), input.value);
+					input.value = '';
+				}
+				getHistory();
+			}
+			getHistory();
+
+			history.onclick = function (event) {
+				event = event || window.event;
+				var target = event.target;
+				if (target.tagName === 'A') {
+					var remove = target.getAttribute('data-k');
+					window.localStorage.removeItem(remove);
+					getHistory();
+				}
+			}
+
+			clear.onclick = function () {
+				window.localStorage.clear();
+				getHistory();
+			}
+
+
+			function getHistory() {
+				var n = 0;
+				var k = null;
+				var key = [];
+				while (k = window.localStorage.key(n)) {
+					key.push(k);
+					n++;
+				}
+
+				var str = '<tr>' +
+					'<th>键名</th>' +
+					'<th>键值</th>' +
+					'<th>功能</th>' +
+					'</tr>';
+				for (var k in key) {
+					var value = window.localStorage.getItem(key[k]);
+					str += '<tr>' +
+						'<td>' + key[k] + '</td>' +
+						'<td>' + value + '</td>' +
+						'<td><a href="javascript:;" data-k="' + key[k] + '">删除</a></td>' +
+						'</tr>';
+				}
+				// console.log(str);
+				history.innerHTML = str;
+			}
+		}
+	</script>
+</head>
+
+<body>
+	<div class="search">
+		<input type="text" class="input" id="input">
+		<button class="btn" id="btn">搜索</button>
+	</div>
+	<a href="javascript:;" id="clear">清除所有历史记录</a>
+	<table class="history" id="history">
+
+	</table>
+</body>
+
+</html>

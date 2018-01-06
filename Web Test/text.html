@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .dragbox {
+            width: 50px;
+            height: 50px;
+            float: left;
+            background-color: red;
+        }
+        .targetArea {
+            width: 500px;
+            height: 500px;
+            float: right;
+            background-color: green;
+        }
+        .textAlign {
+            width: 100%;
+            height: 50px;
+            background-color: #ccc;
+            text-align: justify;
+        }
+        .textAlign span.base {
+            display: inline-block;
+            width: 100%;
+            line-height: 0;
+            height: 0;
+            visibility: hidden;
+        }
+    </style>
+    <!-- <script>
+        window.onload = function(){
+            var dragbox = document.querySelector(".dragbox");
+            var targetArea = document.querySelector(".targetArea");
+
+
+            dragbox.addEventListener("dragstart",function(event){
+                event.dataTransfer.setData("abc", "abc");
+            });
+            dragbox.addEventListener("drag",function(event){
+            });
+            dragbox.addEventListener("dragend",function(event){
+            });
+
+
+            targetArea.addEventListener("dragenter",function(event){
+            });
+            targetArea.addEventListener("dragover",function(event){
+                event.preventDefault();
+            });
+            targetArea.addEventListener("dragleave",function(event){
+            });
+            targetArea.addEventListener("drop",function(event){
+                event.preventDefault();
+                console.log(event.dataTransfer.getData("abc"));
+                console.log(event);
+            });
+        }
+    </script> -->
+</head>
+<body>
+    <!-- <div class="dragbox" draggable="true"></div>
+    <div class="targetArea"></div> -->
+
+    <div class="textAlign">
+        <span>阿宝猜猜猜猜猜猜猜猜猜猜猜猜猜猜猜猜猜猜猜猜猜猜猜猜猜猜猜猜猜猜猜猜猜</span>
+        <span class="base"></span>
+        <span>擦的点点滴滴点点滴滴答滴答滴答滴答滴答滴答滴答滴答滴答滴答滴答滴答滴答滴答滴答滴答滴答滴答滴</span>
+        <span class="base"></span>
+    </div>
+</body>
+</html>
